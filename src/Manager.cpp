@@ -124,7 +124,11 @@ int Manager::getActiveTaskNum() const {
 const std::string &Manager::getTaskName(time_t taskID)const {
   return (allTasks.find(taskID)->second).getName();
 }
- 
+
+
+time_t Manager::getNextTime(time_t taskID) const {
+  return (allTasks.find(taskID)->second).getReviewTime();
+} 
 //Get the step of the task.
 int Manager::getTaskStep(time_t taskID)const {
   return (allTasks.find(taskID)->second).getStep();

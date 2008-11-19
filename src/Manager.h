@@ -60,8 +60,8 @@ public:
   //Get the task's name.
   const std::string &getTaskName(time_t taskID)const;
 
-  //Get the amount of the words from a task.
-  int getTaskAmount(time_t taskID) const;
+  //Get the conrespond task's next reviewing time.
+  time_t getNextTime(time_t taskID) const;
 
   //Get the step of the task.
   int getTaskStep(time_t taskID) const;
