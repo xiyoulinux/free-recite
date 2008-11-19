@@ -43,7 +43,7 @@ class Reciter
 {
 public:
   Reciter()
-    :score(0),isRedo(false),wordList(0)
+    :score(0),wordList(0)
   { /* Do Nothing Here! */ }
   ~Reciter()
   { /* Do Nothing Here! */ } 
@@ -95,7 +95,6 @@ protected:
   bool makeRandom();
   
   unsigned score;
-  bool isRedo;
   WordList *wordList;
   std::vector<std::string> words;
   std::string taskFileName;

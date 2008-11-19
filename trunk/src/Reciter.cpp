@@ -39,6 +39,7 @@ bool Reciter::redo() {
   if(makeRandom()) {
     delete wordList;
     wordList = new WordList(words.size());
+    score = 0;
     return true;
   }else
     return false;
@@ -104,7 +105,7 @@ bool Reciter::removeWord(const std::string &word) {
 
 void Reciter::test(bool result) {
   if(result) {
-    if(wordList->pass() == 0 && !isRedo)
+    if(wordList->pass() == 0)
       ++score;
   }  else
     wordList->lose();

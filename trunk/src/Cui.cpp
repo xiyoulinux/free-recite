@@ -16,13 +16,13 @@ CUI::CUI(const std::string &dir)
   manager = new Manager;
   if(!manager->load(dir)) {
     std::cerr << "Can't load the configure file from " << dir << std::endl
-	      << "The program exit!";
+	      << "The program exit!\n";
     exit(EXIT_FAILURE);  
   }
   dict = new Dict(dir + "freeRecite.dict");
   if(!dict->loadDict()) {
     std::cerr << "Can't load the dic from " << dir << std::endl
-	      << "The program exit!";
+	      << "The program exit!\n";
     exit(EXIT_FAILURE);  
   }
   showActive();
@@ -199,9 +199,7 @@ void CUI::testProcess(Reciter &tester) {
       clear();
     }
   }
-
-  tester.Reciter::redo();
-
+  tester.redo();
   clear();
   std::cout << "Step 2: interpretation To key!" << std::endl;
   while(tester.isValid()) {
@@ -274,33 +272,39 @@ void CUI::test() {
   }
 
   Reciter tester;
-  if(!tester.loadWords((manager->getActiveTasks())[i],manager->getDir().c_str())) {
+  time_t taskID = (manager->getActiveTasks())[i];
+
+  if(!tester.loadWords(taskID,manager->getDir().c_str())) {
     std::cerr << "error when load words!" << std::endl;
     return;
   }
   testProcess(tester);
 
-  if(manager->test((manager->getActiveTasks())[i],tester.getScore()/2)) {
-    std::cout<<"Your score is " << tester.getScore()/2 << std::endl;
+  if(manager->test(taskID,tester.getScore())) {
+    std::cout<<"Your score is " << tester.getScore() << std::endl;
     std::cout<<"You passed it!"<<std::endl;
-    showActive();
   }
   else {
-    std::string YN;
-    while(true){
-      std::cout<<"You haven't passed it :} Do you want to retest it?(y/N)"
-	       <<std::endl;
-      getLine(YN);
-      if(YN=="Y"||YN=="y") {
-	tester.redo();
-	testProcess(tester);
-	continue;
-      }else
-	break;
-    }
+    std::cout<<"Your score is " << tester.getScore() << std::endl
+	     <<"You haven't passed it :} "<<std::endl;
   }
+  
+  time_t nextTime = manager->getNextTime(taskID);
+  if(manager->getTaskStep(taskID) == 8)
+    std::cout << "Congratulations! You have complish this task!" << std::endl;
+  else {
+    struct tm * timeinfo;
+    char buffer[30];
+    timeinfo = localtime(&nextTime);
+    strftime(buffer,30,"%Y.%m.%d %H:%M:%S",timeinfo);
+    std::cout << "Then next reviewing time is: " << buffer
+	      << std::endl << std::endl;
+  }
+  showActive();
   clear();
 }
+
+
 
 void CUI::recite() {
   showActive();
