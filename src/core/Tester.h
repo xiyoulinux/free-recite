@@ -1,9 +1,9 @@
 /**
- * FileName: ForgetCurve.h
- * Used to define the class ForgetCurve which is used to describe the
- * Forgetting Curve.
+ * FileName: Tester.h
+ * Used to define the class Tester which is used to test whether 
+ * the words be remembered.
  *
- * Copyright (C) 2008 Kermit Mei (中文名：梅延涛).
+ * Copyright (C) 2008 Kermit Mei<kermit.mei@gmail.com>.
  * All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -30,39 +30,35 @@
  *
  **/ 
 
-#ifndef FORGETCURVE_H
-#define FORGETCURVE_H
+#ifndef TESTER_H_
+#define TESTER_H_
 
-#include <ctime>
+#include "Scanner.h"
+#include <set>
 
 namespace freeRecite {
 
-class ForgetCurve;
-
-extern ForgetCurve forgetCurve;
-
-class ForgetCurve
+class Tester : public Scanner
 {
- public:
-  ForgetCurve();
-  ~ForgetCurve()
-  { /* Do Nothing! */ }
+public:
+  Tester()
+  { /* Do Nothing Here! */ }
+  ~Tester();
+  
+  unsigned getScore() const;
 
-  time_t getReviewTime(int curOrder) const;
-  bool pass(int curOrder,int curMark)const;
+  void test(bool result);
 
 private:
-  time_t interval[8];
-  int    mark[8];
+  std::set<std::string> errWords;
 };
 
-inline bool ForgetCurve::pass(int curOrder,int curMark) const{
-  if(curMark >= mark[curOrder])
-    return true;
-  else 
-    return false;
+
+inline
+unsigned Tester::getScore() const {
+  return score*100/words.size();
 }
 
-} //namespace freeRecite end
+} //End of namespace freeRecite.
 
-#endif
+#endif //TESTER_H_

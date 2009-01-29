@@ -2,7 +2,7 @@
  * FileName: Manager.h.
  * Used to define the class Manager which is used to handle the tasks.
  *
- * Copyright (C) 2008 Kermit Mei (中文名：梅延涛).
+ * Copyright (C) 2008 Kermit Mei <kermit.mei@gmail.com>
  * All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,17 +36,24 @@
 #include <list>
 #include <map>
 #include <vector>
-
+#include "ConfigHolder.h"
 #include "Task.h"
 
 namespace freeRecite {
 
+class Manager;
+extern Manager manager;
+
 class Manager
 {
 public:
+
+  Manager()
+    :firstReviewTime(0)
+  { /* Do Nothing Here! */ }
+
   //Read the information from freeRecite.mgr file.
-  //If the loadfile can not be read, it returns false.
-  bool load(const std::string &dir);
+  bool load();
 
   //Save the information to freeRecite.mgr file.
   bool save();
@@ -60,31 +67,28 @@ public:
   //Get the task's name.
   const std::string &getTaskName(time_t taskID)const;
 
+  //Get the next reviewing time which is nearest.
+  time_t getNextTime() const;
+
   //Get the conrespond task's next reviewing time.
   time_t getNextTime(time_t taskID) const;
 
   //Get the step of the task.
   int getTaskStep(time_t taskID) const;
 
-  //Creat a new task with the words set.
-  bool creatTask(const std::set<std::string> &words,
-		 const char *taskName = 0);
+  //Create a new task with the words set.
+  bool createTask(const std::set<std::string> &words,
+		  const char *taskName = 0,
+		  unsigned maxLimit = 100000);
+    
+  //Remove a task which had been created.
+  void removeTask(time_t taskID);
+
   //Get the number of the tasks that should be reviewed. 
   int getActiveTaskNum() const;
 
-  //Get the default directory.
-  const std::string &getDir() const;
-
-  /**
-   * Get a point to the Task which is active.
-   **/
+  //Get the active tasks' ID.
   const std::vector<time_t> &getActiveTasks() const;
-
-  // Call this method will add one to the task's words amount.
-  void addWord(time_t taskID);
-
-  // Call this method will subtract one from task's words amount.
-  void removeWord(time_t taskID);
 
   /**
    * This method is used to test whether the mark you got can pass 
@@ -107,28 +111,16 @@ private:
    * they can't creat a file with this name under the same
    * directory.
    **/
-  std::string mgrDir;
+  time_t firstReviewTime;
   std::map<time_t,Task> allTasks;
   std::vector<time_t> activeID;
-
-  static const std::string managerFile;
+  time_t maxTaskID;
 };
 
 inline
-const std::string &Manager::getDir() const {
-  return mgrDir;
+time_t Manager::getNextTime() const { 
+  return firstReviewTime;
 }
-
- 
-
-
-
-
-
-
-
-
-
 
 } //namaspace freeRecite end
 

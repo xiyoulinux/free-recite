@@ -2,7 +2,7 @@
  * FileName: DictItem.h.
  * Used to define the class DictItem to declare the items from the dictionary.
  *
- * Copyright (C) 2008 Kermit Mei (中文名：梅延涛).
+ * Copyright (C) 2008 Kermit Mei <kermit.mei@gmail.com>
  * All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify

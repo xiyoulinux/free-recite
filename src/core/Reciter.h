@@ -1,8 +1,8 @@
 /**
- * FileName: Dict.h.
- * Used to define the class Dict which can handle dictionary.
+ * FileName: Reciter.h.
+ * Used to define the class Reciter which is used to test or recite the words.
  *
- * Copyright (C) 2008 Kermit Mei (中文名：梅延涛).
+ * Copyright (C) 2008 Kermit Mei <kermit.mei@gmail.com>
  * All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,52 +29,31 @@
  *
  **/ 
 
-#ifndef DICT_HPP
-#define DICT_HPP
+#ifndef RECITER_H_
+#define RECITER_H_
 
-#include <map>
-#include <string>
-
-#include "DictItem.h"
+#include "Scanner.h"
 
 namespace freeRecite {
 
-class Dict
+class Reciter : public Scanner
 {
 public:
-  Dict(const std::string initDictName)
-    :dictName(initDictName)
-  { /* Do nothing! */ }
-  ~Dict()
-  { /* Do nothing! */ }
+  Reciter()
+  { /* Do Nothing Here! */ }
+  ~Reciter()
+  { /* Do Nothing Here! */ } 
 
-  bool loadDict();
+  //Do this test again with an random order.
+  bool redo(bool Random = false);
 
-  bool lookUp(const std::string &word);
-
-  bool modify(const std::string &item);
-
-  bool save();
-
-  //Define the mothed here to make them be inline.
-  const std::string &word() const {
-    return dictItem.getW();
-  }
-  
-  const std::string &phonetics() const;
-  
-  const std::string &translation()const { 
-    return dictItem.getM();
-  }
-
-private:
-  std::string dictName;
-  DictItem dictItem;
-  std::map<std::string,std::string> dict;
+  /**
+   * Test with the result. The argument 'result' is true 
+   * when the word which the user input is correct.
+   **/
+  void test(bool result);
 };
 
+} //namespace freeRecite end
 
-
-} // namespace freeRecite end
-
-#endif 
+#endif //RECITER_H_

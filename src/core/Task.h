@@ -3,7 +3,7 @@
  * Used to define the class Task which is used to indicate the status about
  * the user's reciting process.
  *
- * Copyright (C) 2008 Kermit Mei (中文名：梅延涛).
+ * Copyright (C) 2008 Kermit Mei <kermit.mei@gmail.com>
  * All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
