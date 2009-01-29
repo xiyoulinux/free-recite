@@ -3,7 +3,7 @@
  * Used to define the class WordList which is used to creat a circular
  * reviewing system for the user, and help them recite something quickly.
  *
- * Copyright (C) 2008 Kermit Mei (中文名：梅延涛).
+ * Copyright (C) 2008 Kermit Mei <kermit.mei@gmail.com>
  * All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -61,6 +61,9 @@ public:
    **/
   unsigned getNext() const;
 
+  //Get the first word's status.
+  int status() const;
+
   /**
    * If the input word is true, then you must call pass().
    * This method will updata the WordList to help you get 
@@ -68,13 +71,29 @@ public:
    * getNext() next time.:P
    * If it return 0, then the word is tested first.
    **/
-  int pass();
+  void pass();
+
 
   /**
    * If the input word is false, then you must call lose().
-   * It will also help like the pass() do.
+   * The return value is the status of the current word.
    **/
   void lose();
+
+
+  /**
+   * After you add one word to the contain, you must call
+   * this method to synchronize the the contain withe the list.
+   * The argument 'size' is the size of the new contain.
+   **/
+  void add(unsigned size);
+
+  /**
+   * After you remove one word from the contain, you must call
+   * this method to synchronize the the contain withe the list.
+   * The argument 'size' is the size of the new contain.
+   **/
+  void remove(unsigned size);
 
 private:
   //Move the first element one afterward, advance all the pointers
@@ -110,10 +129,14 @@ unsigned WordList::size() const {
   return __size;
 }
 
-
 inline
 unsigned WordList::getNext() const {
   return first->index;
+}
+
+inline
+int WordList::status() const {
+  return first->status;
 }
 
 inline

@@ -1,8 +1,8 @@
 /**
- * FileName: Reciter.h.
+ * FileName: Scanner.h.
  * Used to define the class Reciter which is used to test or recite the words.
  *
- * Copyright (C) 2008 Kermit Mei (中文名：梅延涛).
+ * Copyright (C) 2008 Kermit Mei<kermit.mei@gmail.com>
  * All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,8 +29,8 @@
  *
  **/ 
 
-#ifndef RECITER_HPP
-#define RECITER_HPP
+#ifndef SCANNER_H_
+#define SCANNER_H_
 
 #include <vector>
 #include <string>
@@ -39,67 +39,7 @@
 
 namespace freeRecite {
 
-class Reciter
-{
-public:
-  Reciter()
-    :score(0),wordList(0)
-  { /* Do Nothing Here! */ }
-  ~Reciter()
-  { /* Do Nothing Here! */ } 
-
-  /**
-   * Load the words from the file, success return true.
-   * Whenever you want to use this class, you must call it first.
-   **/
-  bool loadWords(time_t taskID,const char *configDir);
-
-  //The amount of the words in this task.
-  unsigned capability() const;
-
-  //The number of the unremembered (or untested) words.
-  unsigned size() const;
-
-  /**
-   * Get the next word you should recite.
-   * Before you get it, you must test whether it is valid.
-   **/
-  const std::string &getWord() const;
-
-  //If return true, then the object is valid.
-  bool isValid()const;
-
-  //Do this test again with an random order.
-  bool redo();
-
-  //Add a word to the current task.
-  bool addWord(const std::string &word);
-
-  //Remove a word from the current task.
-  bool removeWord(const std::string &word);
-
-  //Get the number of the words which you answered right.
-  unsigned getScore() const;
-
-  /**
-   * Test with the result. The argument 'result' is true when the word
-   * which the user input is correct.
-   **/
-  void test(bool result);
-
-protected:
-  //Reload the words from the file.
-  bool reload();
-
-  //Make words be random.
-  bool makeRandom();
-  
-  unsigned score;
-  WordList *wordList;
-  std::vector<std::string> words;
-  std::string taskFileName;
-};
-
+//A functor to make the words save in random order.
 class Random {
 public:
   ptrdiff_t operator() (ptrdiff_t max) {
@@ -108,29 +48,107 @@ public:
   } 
 };
 
+class Scanner
+{
+public:
+  Scanner()
+    :taskID(0),r_times(0),score(0),wordList(0)
+  { /* Do Nothing Here! */ }
+  virtual ~Scanner();
+
+  /**
+   * Load the words from the file, success return true.
+   * Whenever you want to use this class, you must call it first.
+   **/
+  bool loadWords(time_t initID,bool Random);
+
+  //Get a task's words file by it's ID.
+  static std::string getTaskFileName(time_t taskID);
+
+  //The ID of the corresponding task.
+  time_t id() const;
+
+  //The amount of the words in this task.
+  unsigned capability() const;
+
+  //Return the procent of the current task's progress.
+  unsigned size() const;
+
+  //Return the remaining times that must be scan.
+  unsigned times() const;
+
+  //Returns the score.
+  virtual unsigned getScore() const;
+
+  /**
+   * Get the current word you should recite.
+   * Before you get it, you must test whether it is valid.
+   **/
+  const std::string &getWord() const;
+
+  //If return true, then the object is valid.
+  bool isValid()const;
+
+  //Add a word to the current task.
+  bool add(const std::string &word);
+
+  //Remove a word from the current task.
+  bool remove(const std::string &word);
+
+  /**
+   * Test with the result. The argument 'result' is true 
+   * when the word which the user input is correct.
+   **/
+  virtual void test(bool result) = 0;
+
+protected:
+  //Save all the words in vector to the task's file.
+  bool save();
+
+  //Mank wors' order be random.
+  bool makeRandom();
+
+  time_t taskID;
+  int r_times;
+  unsigned score;
+  WordList *wordList;
+  std::vector<std::string> words;
+  std::string taskFileName;
+};
+
+inline
+Scanner::~Scanner() {
+  if(wordList != 0)
+    delete wordList;
+}
+
+inline
+time_t Scanner::id() const {
+  return taskID;
+}
+
 inline 
-const std::string &Reciter::getWord() const {
+const std::string &Scanner::getWord() const {
   return words[wordList->getNext()];
 }
 
-
 inline
-unsigned Reciter::capability() const {
+unsigned Scanner::capability() const {
     return words.size();
 }
 
 inline
-unsigned Reciter::size() const{
-  if(wordList == 0)
-    return 0;
-  if(wordList->isValid())
-    return wordList->size();
-  else
-    return 0;
+unsigned Scanner::size() const {
+  return wordList->size();
+}
+
+inline
+unsigned Scanner::times() const{
+  return static_cast<unsigned>(words.size() + r_times);
 }
 
 inline 
-bool Reciter::isValid() const {
+bool Scanner::isValid() const {
   if(wordList == 0)
     return false;
   else
@@ -138,9 +156,10 @@ bool Reciter::isValid() const {
 }
 
 inline
-unsigned Reciter::getScore() const {
-  return score*100/words.size();
+unsigned Scanner::getScore() const {
+  return score;
 }
 
 } //namespace freeRecite end
-#endif
+
+#endif //SCANNER_H_

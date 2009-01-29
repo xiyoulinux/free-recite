@@ -19,23 +19,21 @@ ForgetCurve::ForgetCurve() {
   interval[6] = 518400;          //  6 days
   interval[7] = 2678400;         // 31 days
     
-  mark[0] = 90;
-  mark[1] = 58;
-  mark[2] = 76;
-  mark[3] = 80;
-  mark[4] = 85;
-  mark[5] = 93;
-  mark[6] = 95;
-  mark[7] = 95;
+  mark[0] = 84;
+  mark[1] = 60;
+  mark[2] = 66;
+  mark[3] = 70;
+  mark[4] = 73;
+  mark[5] = 76;
+  mark[6] = 80;
+  mark[7] = 83;
 }
-
 
 time_t ForgetCurve::getReviewTime(int curOrder) const{
   time_t current;
   time(&current);
   return current + interval[curOrder];
 }
-
 
 ForgetCurve forgetCurve;
 

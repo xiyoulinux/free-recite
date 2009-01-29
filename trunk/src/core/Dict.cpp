@@ -2,10 +2,12 @@
 #include <iostream>
 
 #include "Dict.h"
+#include "ConfigHolder.h"
 
 namespace freeRecite {
 
-bool Dict::loadDict() {
+bool Dict::load() {
+  std::string dictName = configHolder.dictFile().c_str();
   std::ifstream ifs(dictName.c_str());
   if(!ifs.is_open())
     return false;
@@ -31,8 +33,9 @@ bool Dict::lookUp(const std::string &word) {
 bool Dict::modify(const std::string &item) {
   static DictItem itemAdd;
   
-  if(!itemAdd.refer(item))
+  if(!itemAdd.refer(item)){
     return false;
+  }
   
   dict[itemAdd.getW()] = item;
   if(save())
@@ -42,15 +45,15 @@ bool Dict::modify(const std::string &item) {
 }
 
 bool Dict::save() {
-  std::ofstream ofs(dictName.c_str());
-  if(!ofs.is_open())
+  std::ofstream ofs(configHolder.dictFile().c_str());
+  if(!ofs.is_open()) {
     return false;
-
+  }
   std::map<std::string,std::string>::const_iterator itr = dict.begin();
   while(itr != dict.end()) {
-    if(!ofs.good())
+    if(!ofs.good()){
       return false;
-    
+    }
     ofs << itr->second << std::endl;
     ++itr;
   }
@@ -105,5 +108,7 @@ const std::string &Dict::phonetics() const {
   return __phonetics;
 }
 
+//This is a global variable.
+Dict dictionary;
 
 } //namespace freeRecite end
