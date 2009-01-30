@@ -4,11 +4,9 @@
 
 using namespace std;
 
-int main(void)
+int main(int argc, char *argv[])
 {
-  std::string dir(getenv("HOME"));
-  dir.append("/.FreeRecite/");
-  freeRecite::CUI cui(dir);
-  cui.run();
+  freeRecite::CUI cui;
+  cui.run(argc,argv);
   return 0;
 }
