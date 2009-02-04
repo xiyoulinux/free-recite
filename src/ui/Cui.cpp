@@ -49,8 +49,14 @@ void CUI::run(int argc, char *argv[]) {
     }else if(!strcmp(argv[1],"cls")) {
       cleanStress();
       return;
+    }else if(!strcmp(argv[1],"done")) {
+      exportDone();
+      return;
     }else if(!strcmp(argv[1],"ls")) {
       showActive();
+      return;
+    }else if(!strcmp(argv[1],"modify")) {
+      modify(std::string(""));
       return;
     }else if(!strcmp(argv[1],"stress")) {
       exportStress();
@@ -65,6 +71,9 @@ void CUI::run(int argc, char *argv[]) {
       }
     }else if(!strcmp(argv[1],"new")) {
       createNew(argv[2]);
+      return;
+    }else if(!strcmp(argv[1],"modify")) {
+      modify(std::string(argv[2]));
       return;
     }else if(!strcmp(argv[1],"recite")) {
       if( ( taskID = atoid(argv[2]) ) != 0 ) {
@@ -171,6 +180,10 @@ void CUI::exportFromFile(const char *fileName) {
   }
 }
 
+void CUI::exportDone() {
+  exportFromFile(configHolder.doneFile().c_str());
+}
+
 void CUI::exportTask(time_t taskID) {
   if(!manager.hasTask(taskID)) {
     std::cout << "There's no this task!" << std::endl;
@@ -184,7 +197,6 @@ void CUI::exportStress(){
   exportFromFile(configHolder.keyFile().c_str());
 }
 
-
 void CUI::test(time_t taskID) {
   Tester tester;
   if(!manager.hasTask(taskID)) {
@@ -192,7 +204,7 @@ void CUI::test(time_t taskID) {
     return;
   }
   std::string inputStr;
-  if(!tester.loadWords(taskID, true)) {
+  if(!tester.load(taskID)) {
     std::cerr << "error when load words!" << std::endl;
     return;
   }
@@ -210,9 +222,10 @@ void CUI::test(time_t taskID) {
       std::cout <<"**********************************************" << std::endl;
       std::cout<<"*Input : ";
       getLine(inputStr);
-      if(inputStr == "\\modify")
+      if(inputStr == "\\modify"){
 	modify(tester.getWord());
-      else if(inputStr == "\\add"){
+	continue;
+      }else if(inputStr == "\\add"){
 	std::cout << "Input new word: ";
 	getLine(inputStr);
 	tester.add(inputStr);
@@ -255,28 +268,23 @@ void CUI::test(time_t taskID) {
   startTime = endTime - startTime;
   std::cout << std::endl << "Used Time: " 
 	    << startTime/60 << "minutes" << std::endl;
-
-  if(manager.test(taskID,tester.getScore())) {
+  int testResult = manager.test(taskID,tester.getScore());
+  if(testResult == 0) {
     std::cout<<"Your score is " << tester.getScore() << std::endl;
     std::cout<<"You passed it!"<<std::endl;
-  }
-  else {
-    std::cout<<"Your score is " << tester.getScore() << std::endl
-	     <<"You haven't passed it :} "<<std::endl;
-  }
-  
-  time_t nextTime = manager.getNextTime(taskID);
-  if(manager.getTaskStep(taskID) == 8) {
-    manager.removeTask(taskID);
-    std::cout << "Congratulations! You have complish this task!" 
-	      << std::endl;
-  }else {
+    time_t nextTime = manager.getNextTime(taskID);
     struct tm * timeinfo;
     char buffer[30];
     timeinfo = localtime(&nextTime);
     strftime(buffer,30,"%Y.%m.%d %H:%M:%S",timeinfo);
     std::cout << "Then next reviewing time is: " << buffer
-	      << std::endl << std::endl;
+	      << std::endl;
+  }else if(testResult == -1){
+    std::cout<<"Your score is " << tester.getScore() << std::endl
+	     <<"You haven't passed it :} "<<std::endl;
+  }else {  // testResult == 1
+    std::cout << "Congratulations! You have complish this task!" 
+	      << std::endl;
   }
 }
 
@@ -289,7 +297,7 @@ void CUI::recite(time_t taskID) {
 
   Reciter reciter;
   std::string inputStr;
-  if(!reciter.loadWords(taskID,false)) {
+  if(!reciter.load(taskID)) {
     std::cerr << "error when load words!" << std::endl;
     return;
   }
@@ -308,6 +316,7 @@ void CUI::recite(time_t taskID) {
       getLine(inputStr);
       if(inputStr == "\\modify"){
 	modify(reciter.getWord());
+	continue;
       } else if(inputStr == "\\add"){
 	std::cout << "Input new word: ";
 	getLine(inputStr);
@@ -348,19 +357,17 @@ void CUI::recite(time_t taskID) {
   }
 
   time(&endTime);
-  startTime = endTime - startTime;
+  startTime = (endTime - startTime)/60;
+  time_t usedTime = startTime > 0 ? startTime : 1;
   std::cout << std::endl << "Used Time: " 
-	    << startTime/60 << "minutes" << std::endl;
-  float r_num = static_cast<float>(reciter.capability() - reciter.getScore());
-  std::cout << "There're " << reciter.capability() << "words in this task. "
-	    << reciter.getScore() << " of it you have known before." 
+	    << usedTime << " minutes" << std::endl;
+  float r_num = reciter.capability() - reciter.getScore();
+  std::cout << "There're " << reciter.capability() << " words in this task. "
+	    << reciter.getScore() << " of them you have known before." 
 	    << std::endl << "Your Reciting Rate is: "
-	    << r_num / static_cast<float>(startTime/60)
+	    << r_num / usedTime
 	    << " word(s)/min" << std::endl;
 }
-
-
-
 
 void CUI::remove(time_t taskID) {
   if(!manager.hasTask(taskID)) {
@@ -469,16 +476,30 @@ void CUI::showResult(bool result) {
 void CUI::help() {
   std::cout << "usage: frt [--version]  [--help] COMMAND [ARGS]" << std::endl
 	    << "The most commonly used git commands are:" << std::endl
-	    << " cls                 Clean the strees' words in the system" << std::endl
-	    << " export <taskID>     Export a tasks' words to the screen" << std::endl
-	    << " ls                  List the should reviewed tasks's information" << std::endl
-	    << " new    <filename>   Creat new tasks with the words in the file" << std::endl
-	    << " recite <taskID>     Recite the task whose ID is taskID"<<std::endl
-	    << " remove <taskID>     Remove a task which you don't want to recite" << std::endl
-	    << " stress              Show some words which may be difficult for you" << std::endl
-	    << " test   <taskID>     Test the task whose ID is taskID" << std::endl
-	    << " --help              Show this help information" << std::endl
-	    << " --version           Show the current version" << std::endl;
+	    << " cls                 Clean the strees' words in the system" 
+	    << std::endl
+	    << " done                Export the words which you have remembered"
+	    <<std::endl
+	    << " export <taskID>     Export a tasks' words to the screen"
+	    << std::endl
+	    << " ls                  List the should reviewed tasks's information" 
+	    << std::endl
+	    << " new    <filename>   Creat new tasks with the words in the file" 
+	    << std::endl
+	    << " modify [word]       Modify the word in the dictionary."
+	    << std::endl
+	    << " recite <taskID>     Recite the task whose ID is taskID"
+	    <<std::endl
+	    << " remove <taskID>     Remove a task which you don't want to recite"
+	    << std::endl
+	    << " stress              Show some words which may be difficult for you" 
+	    << std::endl
+	    << " test   <taskID>     Test the task whose ID is taskID"
+	    << std::endl
+	    << " --help              Show this help information"
+	    << std::endl
+	    << " --version           Show the current version"
+	    << std::endl;
 }
 
 } // namespace freeRecite End.

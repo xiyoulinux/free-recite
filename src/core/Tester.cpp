@@ -24,19 +24,24 @@ Tester::~Tester() {
   ofs.close();
 }
 
+
+bool Tester::load(time_t initID,bool Random) {
+  if( loadWords(initID,Random) ) {
+    wordList = new WordList(words.size(),configHolder.t_list());
+    return true;
+  }else {
+    return false;
+  }
+}
+
 void Tester::test(bool result) {
   if(result) {
     if(wordList->status() == 0)
       ++score;
-    --r_times;
     wordList->pass();
   } else {
-    if( wordList->status() == 0) {
+    if( wordList->status() == 0) 
       errWords.insert(getWord());
-      r_times += 4;
-    }else {
-      r_times += wordList->status()-1;
-    }
     wordList->lose();
   }
 }

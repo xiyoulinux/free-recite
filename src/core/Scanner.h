@@ -52,18 +52,15 @@ class Scanner
 {
 public:
   Scanner()
-    :taskID(0),r_times(0),score(0),wordList(0)
+    :taskID(0),score(0),wordList(0)
   { /* Do Nothing Here! */ }
   virtual ~Scanner();
 
-  /**
-   * Load the words from the file, success return true.
-   * Whenever you want to use this class, you must call it first.
-   **/
-  bool loadWords(time_t initID,bool Random);
+  //Load the tasks.
+  virtual bool load(time_t initID,bool Random) = 0;  
 
   //Get a task's words file by it's ID.
-  static std::string getTaskFileName(time_t taskID);
+  static const std::string getTaskFileName(time_t taskID);
 
   //The ID of the corresponding task.
   time_t id() const;
@@ -102,6 +99,13 @@ public:
   virtual void test(bool result) = 0;
 
 protected:
+
+  /**
+   * Load the words from the file, success return true.
+   * Whenever you want to use this class, you must call it first.
+   **/
+  bool loadWords(time_t initID,bool Random);  
+
   //Save all the words in vector to the task's file.
   bool save();
 
@@ -109,7 +113,6 @@ protected:
   bool makeRandom();
 
   time_t taskID;
-  int r_times;
   unsigned score;
   WordList *wordList;
   std::vector<std::string> words;
@@ -144,7 +147,7 @@ unsigned Scanner::size() const {
 
 inline
 unsigned Scanner::times() const{
-  return static_cast<unsigned>(words.size() + r_times);
+  return static_cast<unsigned>(words.size() + wordList->times());
 }
 
 inline 

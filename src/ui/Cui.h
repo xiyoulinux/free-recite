@@ -22,6 +22,7 @@ private:
   void clear();
   void createNew(const char *fileName);
   void exportFromFile(const char *fileName);
+  void exportDone();
   void exportTask(time_t taskID);
   void exportStress();
   void help();

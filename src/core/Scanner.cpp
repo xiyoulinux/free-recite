@@ -1,6 +1,7 @@
 #include <fstream>
 #include <algorithm>
 #include <ctime>
+#include <sstream>
 #include <set>
 #include "ConfigHolder.h"
 #include "Reciter.h"
@@ -10,12 +11,10 @@
 
 namespace freeRecite {
 
-std::string Scanner::getTaskFileName(time_t initID) {
-  struct tm * timeinfo;
-  char buffer[20];
-  timeinfo = localtime(&initID);
-  strftime(buffer,20,"%Y%m%d%H%M%S.tkwd",timeinfo);
-  return (configHolder.tasksDir() + buffer);
+const std::string Scanner::getTaskFileName(time_t initID) {
+  std::ostringstream oss;
+  oss << static_cast<unsigned>(initID);
+  return (configHolder.tasksDir() + oss.str() + ".tkwd");
 }
 
 bool Scanner::loadWords(time_t initID,bool Random) {
@@ -32,18 +31,13 @@ bool Scanner::loadWords(time_t initID,bool Random) {
   }
 
   //If Random is false, then do not call makeRandom().
-  if(Random)
-    if(!makeRandom())
-      return false;
-
-  wordList = new WordList(words.size());
-  return true;
+  return Random ? makeRandom() : true;
 }
 
 //Add a word to the current task.
 bool Scanner::add(const std::string &word) {
   words.push_back(word);
-  wordList->add(words.size());
+  wordList->add();
   return save();
 }
 
@@ -59,12 +53,9 @@ bool Scanner::remove(const std::string &word) {
   if(index == words.size()) //Can't find this word.
     return false;
 
-  if(wordList->status() != 0)
-    r_times -= 5 - wordList->status();
-
   words[index] = words[words.size()-1];
   words.pop_back();
-  wordList->remove(words.size());
+  wordList->remove();
   return save();
 }
 

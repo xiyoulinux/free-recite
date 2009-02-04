@@ -96,13 +96,14 @@ public:
    * else it won't. 
    * 
    * Return Value:
-   *    true: If you can pass it.
-   *    false: If you can't pass it.
+   *   -1: If you can't pass it.
+   *    0: If you pass this setp.
+   *    1: If you complish this task.
    * 
    * After calling this method, itr will point to the tested Task 
    * object, see Task::test() for more information.
    **/
-  bool test(time_t taskID,int mark);
+  int test(const time_t &taskID, const int &mark);
 private:
   /**
    * mgrDir is the directory where default freeRecite.mgr 

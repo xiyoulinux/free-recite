@@ -1,35 +1,4 @@
-一、如何安装
-
-1.下载源码，进入源码目录：
-$ cd FreeRecite
-
-2.生成Makefile:
-$ mkdir build
-$ cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=/usr .. 
-
-注释：
-      创建目录build。
-
-      进入build目录的目的是进行外部编译，将所有的编译中间文
-      件都存放在build目录下。这样，就不用"make distclean"，
-      而是直接删除build下所有文件就能删除中间文件。
-
-      CMAKE_INSTALL_PREFIX变量指定了文件的安装目录，如果不
-      指定，将会被安装到/usr/local目录下。这里要注意，命令
-      后面的两个句点号 ".." 不可以缺少。
-
-3.编译程序：
-$ make
-
-4.安装程序：(需要超级用户权限)
-# make install
-
-5.卸载程序：(需要超级用户权限)
-# make uninstall
-
-
-二、Free Recite的特点
+一、Free Recite的特点
   
   1.Free Recite采用了记忆曲线的原理，在初次记忆中根据作者自己
     的亲身体会，又加入有十分有效率的记忆循环。
@@ -44,21 +13,49 @@ $ make
 
   5.软件免费，开放代码，遵循GPLv3协议，是一款真正的自由软件。
 
+二、如何安装
+
+1.下载源码，进入源码目录：
+$ cd FreeRecite
+
+2.生成Makefile:
+$ mkdir build
+$ cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=/usr .. 
+
+注释：
+      创建目录build。
+
+      进入build目录的目的是进行外部编译，将所有的编译中间文件都存放在build目录
+      下。这样，就不用"make distclean"，而是直接删除build下所有文件就能删除中间
+      文件。
+
+      CMAKE_INSTALL_PREFIX变量指定了文件的安装目录，如果不指定，将会被安装到
+      /usr/local目录下。这里要注意，命令后面的两个句点号 ".." 不可以缺少。
+
+3.编译程序：
+$ make
+
+4.安装程序：(需要超级用户权限)
+# make install
+
+5.卸载程序：(需要超级用户权限)
+# make uninstall
+
+
 
 三、如何使用
 
-1.初始化: 在Linux下，每个用户在第一次使用FreeRecite时，
-  都应当使用命令 frt-init对环境进行初始化。否则，frt将
-  不能正常启动，并通知用户需要运行frt-init命令。如：
+1.初始化: 在Linux下，每个用户在第一次使用FreeRecite时，都应当使用命令 frt-init对
+  环境进行初始化。否则，frt将不能正常启动，并通知用户需要运行frt-init命令。如：
   $ frt
   Can't load /home/meiyantao/.FreeRecite/freeRecite.mgr.
   You should use command 'frt-init' to initialize.
   $ frt-init 
   You may be first use Free Recite, initialize it!
     
-2.帮助：在命令行下输入frt命令，或者 frt --help 可以显
-  示一个简单但很有用的帮助文档。FreeRecite所有的用法都
-  在这个文档中列出。如：
+2.帮助：在命令行下输入frt命令，或者 frt --help 可以显示一个简单但很有用的帮助文
+  档。FreeRecite所有的用法都在这个文档中列出。如：
   $ frt
   usage: frt [--version]  [--help] COMMAND [ARGS]
   The most commonly used git commands are:
@@ -73,11 +70,11 @@ $ make
    --help              Show this help information
    --version           Show the current version
    
-  frt --help的结果与此相同，当然，必须是运行frt-init初始化之后。
+p  frt --help的结果与此相同，当然，必须是运行frt-init初始化之后。
 
-3.新建一个任务：FreeRecite的最大优点就是用户可自己定义
-  需要记忆的词汇。方法很简单，把生词（或词组）存放在一
-  个文件中，以换行为分割，例如：
+3.新建一个任务：
+  FreeRecite的最大优点就是用户可自己定义需要记忆的词汇。方法很简单，把生词（或
+  词组）存放在一个文件中，以换行为分割，例如：
   $ cat myfile 
   hello
   free
@@ -87,28 +84,24 @@ $ make
   (Press Enter will give a default name): myfile
   Creat a task SUCCESS!
   $ 
-  注：为了方便以后复习，Free Recite要求你在新建任务时给
-      任务起个名字。如果名字为空（直接按回车），那么Free
-      Recite将会把创建任务时的具体时间作为默认的任务名。
-
-      此外，你不用担心你的文件中有重复的单词，Free Recite
-      会自动帮你把重复的单词过滤出；并向你提示那些在字典
-      中找不到的单词。你可以从任务中删除这个词，还可以修改
-      你的字典。事实上，这个导入的文件格式就是stardict中默
-      认的 ~/dic.txt 文件的存放格式，你可以直接导入这个文件。
+  注：为了方便以后复习，Free Recite要求你在新建任务时给任务起个名字。如果名字为
+      空，那么Free Recite将会按照创建任务时的时间产生默认任务名。
+      此外，你不用担心你的文件中有重复的单词，Free Recite会自动帮你把重复的单词
+      过滤出；并向你提示那些在字典中找不到的单词。你可以从任务中删除这个词，还可
+      以修改你的字典。事实上，这个导入的文件格式就是stardict中默认的 ~/dic.txt文
+      件的存放格式，你可以直接导入这个文件。
 
 4.查看需要复习的任务：
   $ frt ls
   There's 1 tasks should review.
   N  Name                Step     ID    
   0  myfile              0    1233264782
-  我们刚才新建了一个任务，使用命令'frt ls'会把所有现在需要
-  复习的任务显示出来，包括任务名，复习阶段和一个ID。这个ID
-  很重要，应为用户后面操作任务时必须指定相应的ID。
+  我们刚才新建了一个任务，使用命令'frt ls'会把所有现在需要复习的任务显示出来，包
+  括任务名，复习阶段和一个ID。用户在对指定任务进行操作时必须引用其ID。
  
 5.查看任务中都有那些单词：
-  用户在复习或者除此记忆的时候，总要知道这个任务中有那些单
-  词，那么命令 'frt export <task ID>' 可以很容易地做到：
+  用户在复习或者除此记忆的时候，总要知道这个任务中有那些单词，那么命令
+   'frt export <task ID>' 可以很容易地做到：
   $ frt export 1233264782
   free         [fri:] a. 自由的，免费的；vt. 使自由，使摆脱
   hello        ['hʌ'lәu] int.英(美)喂,你好
@@ -116,41 +109,37 @@ $ make
   注：第三个参数是任务的ID，就是4中显示的ID列的数字。
   
 6.使用recite命令加速记忆：
-  Free Recite为了让用户更加快速的完成初次记忆，在recite记忆
-  功能里加入了记忆循环系统，能有效地帮助对没有掌握的单词进行
-  循环复习。例如：
+  Free Recite为了让用户更加快速的完成初次记忆，在recite记忆功能里加入了记忆循环
+  系统，能有效地帮助对没有掌握的单词进行循环复习。例如：
   $ frt recite 1233264782
    Amount: 3 R_Num: 3 R_Times: 3
    [M]: a. 自由的，免费的；vt. 使自由，使摆脱
    **********************************************
    *Input :_
 
-   注：recite和后面提到的test的界面是一样的。其中，Amount表示
-   该任务中包含单词的总数；R_Num表示没有掌握的词数；R_Time表示
-   在记忆循环中还要输入单词的总次数。在Input: 后面输入答案后敲
-   回车结束，结果就会反馈到终端中。
+  注：recite和后面提到的test的界面是一样的。其中，Amount表示 该任务中包含单词的
+      总数；R_Num表示没有掌握的词数；R_Time表示在记忆循环中还要输入单词的总次数。
+      在Input: 后面输入答案后以回车结束，结果就会反馈到终端中。
 
 7.使用test命令按时复习：
   test的界面以及操作方法和recite基本一致：
   $frt test 1233264782
   他们的主要区别是：
-  a.test会把任务的分数结果提交给系统，看用户是否达到要求;recite
-    只是测试用户记忆该组单词的平均速度。
-  b.此外，test会把用户答错的单词放到系统中，使用stress命令可以将
-    这些单词导出到终端上帮助用户重点复习；而recite不会。
+  a.test会把任务的分数结果提交给系统，看用户是否达到要求;recite只是测试用户记忆
+    该组单词的平均速度。
+  b.此外，test会把用户答错的单词放到系统中，使用stress命令可以将这些单词导出到终
+    端上帮助用户重点复习；而recite不会。
   c.test中的单词是以随机顺序出现的，而recite是以字母顺序出现的。
-  建议： 第一次（step = 0）背单词时使用recite； 
-  	 以后复习(step > 0) 时使用test。
+  *建议： 第一次（step = 0）背单词时使用recite； 
+          以后复习(step > 0) 时使用test。
 
 8.recite和test中的转义命令：
-  recite和test中有四个转义命令： \modify  \add  \rm  \stop
-  这四个命令很有用，在help文档中没有列出，这里有必要重点介绍
-  一下。这些功能的具体好处只有用户体验过才会知道。这些命令都
-  是在*Input: 提示符后输入的，而且都没有参数。 其中，\modify
-  用来改变当前正在测试的单词在字典中的解释或者音标；\add可将
-  一个新词添加到任务中；\rm可将当前正在测试的这个单词从任务中
-  移除；\stop中止测试循环，退出到shell。 例如：
-  
+  recite和test中有四个转义命令： \modify  \add  \rm  \stop 这四个命令很有用，在
+  help文档中没有列出，这里有必要重点介绍一下。这些功能的具体好处只有用户体验过才
+  会知道。这些命令都是在*Input: 提示符后输入的，而且都没有参数。 其中，\modify用
+  来改变当前正在测试的单词在字典中的解释或者音标；\add可将一个新词添加到任务中；
+  \rm可将当前正在测试的这个单词从任务中移除；\stop中止测试循环，退出到shell。 
+  例如：
   $ frt recite 1233264782
    Amount: 3 R_Num: 3 R_Times: 3
    [M]: a. 自由的，免费的；vt. 使自由，使摆脱
@@ -161,20 +150,15 @@ $ make
    [T]: fri:                （在这里输入音标）
    [M]: 自由软件            （在这里输入解释）
    
-
-  结束后，下次显示free这个单词就会把“自由软件”当作
-  解释了。 上面那些奇怪的符号表示的是音标中的特殊
-  字符，大多数音标都可以找到相应的英文字母来代替，
-  但也有些不行。那么，就用上行符号对应的数字来代替
-  他们，FreeRecite使用的utf-8编码会自动把相应的字符
-  转换成音标。
+  结束后，下次显示free这个单词就会把“自由软件”当作解释了。 上面那些奇怪的符号表
+  示的是音标中的特殊字符，大多数音标都可以找到相应的英文字母来代替，但也有些不
+  行。那么，就用上行符号对应的数字来代替他们，FreeRecite使用的utf-8编码会自动把
+  相应的字符转换成音标。
 
 9.用stress命令查看难点单词：
-  在背单词的过程中，总会有一些词是难度较大，因此用户
-  在复习中很容易答错。FreeRecite会把用户答错的单词记
-  录下来，使用'frt stress'命令会把所有这些单词输出到
-  终端上方便用户查看。下面是我自己复习过程中的难点单
-  词输出结果：
+  在背单词的过程中，总会有一些词是难度较大，因此用户在复习中很容易答错。
+  FreeRecite会把用户答错的单词记录下来，使用'frt stress'命令会把所有这些单词输
+  出到终端上方便用户查看。下面是我自己复习过程中的难点单词输出结果：
   $ frt stress
   assistance   [ә'sistәns] n.help, aid 协作; 援助; 帮助
   campaign     [kæm'pein] n.战役，运动；竞选运动 vi.领导，发起运动
@@ -184,10 +168,19 @@ $ make
   expulsion    [ik'spʌʃәn] n. 逐出, 开除, 驱逐, 排气
 
 10.清空难点单词存档：
-  当你发现stress的词很多，或者你已经掌握了提示过的这些，那么使用
-  'frt cls'命令可以清空系统stress中的内容，下次会重新开始记忆。
+  当你发现stress的词很多，或者你已经掌握了提示过的这些，那么使用'frt cls'命令可
+  以清空系统stress中的内容，下次会重新开始记忆。
+
+11.修改字典中的单词：
+  除了可以在recite或者test的过程中使用\modify命令修改单词外，Free Recite还允许用
+  户直接指定要修改的单词，命令格式为：
+  $frt modify [word]
+  其中 word 是可选的参数，如果没有输入，那么FreeRecite会自动提示（[W]）你输入单
+  词，提示符为[W]。modify 的操作和test过程中的修改操作大致相同，这里不再重复。
+
 
 至此，我们已经将FreeRecite所有的使用方法介绍了。欢迎测试，如果遇到
-Bug，希望你能后及时反馈给我 <kermit.mei@gmail.com>.
-
+Bug，希望你能后及时反馈给我们
+	Kermit Mei <kermit.mei@gmail.com>.
+	Jianjun Kong <kongjianjun@gmail.com>
 感谢您的使用！
