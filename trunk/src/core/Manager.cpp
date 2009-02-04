@@ -10,6 +10,7 @@
 #include "ConfigHolder.h"
 #include "Manager.h"
 #include "ForgetCurve.h"
+#include "Scanner.h"
 #include "Task.h"
 
 namespace freeRecite {
@@ -120,11 +121,7 @@ bool Manager::createTask(const std::set<std::string> &words,
       maxTaskID = curTime;
     else
       ++maxTaskID;
-    timeinfo = localtime(&maxTaskID);
-    strftime(buffer,20,"%Y%m%d%H%M%S.tkwd",timeinfo);
-    std::string desFileName = configHolder.tasksDir() + buffer;
-    
-    desFile.open(desFileName.c_str());
+    desFile.open(Scanner::getTaskFileName(maxTaskID).c_str());
     if(!desFile.is_open()) {
       return false;
     }
@@ -156,12 +153,7 @@ bool Manager::createTask(const std::set<std::string> &words,
 void Manager::removeTask(time_t taskID) {
   allTasks.erase(allTasks.find(taskID));
   if(save()) {
-    struct tm * timeinfo;
-    char buffer[20];
-    timeinfo = localtime(&taskID);
-    strftime(buffer,20,"%Y%m%d%H%M%S.tkwd",timeinfo);
-    std::string taskFileName = configHolder.tasksDir() + buffer;
-    remove(taskFileName.c_str());
+    ::remove(Scanner::getTaskFileName(taskID).c_str());
   }
 }
 
@@ -188,9 +180,45 @@ int Manager::getTaskStep(time_t taskID)const {
   return (allTasks.find(taskID)->second).getStep();
 }
 
-bool Manager::test(time_t taskID,int mark) {
-  bool result = (allTasks[taskID]).test(mark);
-  return (refresh() && result);
+int Manager::test(const time_t &taskID, const int &mark){
+  int result = (allTasks[taskID]).test(mark);
+  if(result == -1)  //If user haven't complish the task,return directly.
+    return result;
+  if(result == 0) {
+    refresh();
+    return result;
+  }
+
+  // This task have been complished, add the words to done.txt and
+  // delete this task in manager.
+  std::ifstream ifs(Scanner::getTaskFileName(taskID).c_str());
+  if(!ifs.is_open())
+    return result;
+  std::set<std::string> doneWords;
+  std::string word;
+  while(ifs.good()) {
+    std::getline(ifs,word);
+    if(!word.empty())
+      doneWords.insert(word);
+  }
+  ifs.close();
+  ifs.open(configHolder.doneFile().c_str());
+  if(ifs.is_open()) {
+    while(ifs.good()) {
+      std::getline(ifs,word);
+      if(!word.empty())
+	doneWords.insert(word);
+    }
+    ifs.close();
+  }
+  std::ofstream ofs(configHolder.doneFile().c_str());
+  if(!ofs.is_open())
+    return result;
+  std::set<std::string>::const_iterator itr = doneWords.begin();
+  while(ofs.good() && itr != doneWords.end())
+    ofs << *itr++ << '\n';
+  removeTask(taskID);
+  return result;
 }
 
 //This is a global variable.

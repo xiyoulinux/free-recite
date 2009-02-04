@@ -42,9 +42,13 @@ class Tester : public Scanner
 {
 public:
   Tester()
-  { /* Do Nothing Here! */ }
+    { /* Do Nothing Here! */ }
   ~Tester();
+
+  //Load the task. This method is a implementation of Scnner::load();
+  virtual bool load(time_t initID, bool Random = true);
   
+  //Get the score.
   unsigned getScore() const;
 
   void test(bool result);

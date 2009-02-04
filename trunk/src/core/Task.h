@@ -59,7 +59,16 @@ public:
   bool hasFinished() const;
   bool isAvailable() const;
 
-  bool test(int mark);
+  /**
+   * This method is used to test whether the mark you got can pass 
+   * this test. 
+   * 
+   * Return Value:
+   *   -1: If you can't pass it.
+   *    0: If you pass this setp.
+   *    1: If you complish this task.
+   **/
+  int test(int mark);
 private:
   time_t id;
   time_t reviewTime;

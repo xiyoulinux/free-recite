@@ -1,132 +1,114 @@
+#include "ConfigHolder.h"
 #include "WordList.h"
 
 namespace freeRecite {
 
-WordList::WordList(unsigned init__Size)
-  :__size(init__Size),first(0),last(0)
+WordList::WordList(unsigned initSize,
+		   const std::vector<unsigned> *initPt)
+  :__size(initSize),__maxIndex(initSize-1),posToStatus(initPt),
+   r_times(0),first(0),last(0)
 {
-  for(unsigned i = 0; i < __size; ++i) {
-    if(i == 0) {
-      first = new NodeWord(0);
-      last = first;
-      for(int i = 1; i < 4; ++i)
-	pos[i] = first;
-    }else {
+  //Initialize the wordList.
+  if(__size > 0) {
+    first = new NodeWord(0);
+    last = first;
+  }
+  for(unsigned i = 1; i < __size; ++i) {
       last->next = new NodeWord(i);
       last = last->next;
-      
-      if( i == 1 )
-	pos[1] = pos[1]->next;
-      if( i > 0 && i <= 3 )
-	pos[2] = pos[2]->next;
-      if( i > 0 && i <= 7)
-	pos[3] = pos[3]->next;
-    }
   }
 }
 
 WordList::~WordList()
 {
-  pos[0] = first;
+  NodeWord *tmp = 0;
   while(first != 0) {
+    tmp = first;
     first = first->next;
-    delete pos[0];
-    pos[0] = 0;
+    delete tmp;
+    tmp = 0;
   }
 }
 
 void WordList::pass()
 {
-  if( status() > 0 && status() < 4) //You should review it! status = 1,2,3
-    moveToPos(status());
-  else if(status() == 4) //Put the word to the last.
-    moveToLast();
-  else //You have remembered it! status = 0,5
+  //You should review it!
+  if(first->status > 0 && first->status < posToStatus->size()) {
+    ++first->status;
+    moveAfter(posToStatus->at(first->status - 1));
+  }
+  else //You have remembered it! (first or last status)
     pop();
+  --r_times;
 } //end of function WordList::pass().
 
 void WordList::lose()
 {
+  if(first->status == 0)
+    r_times += posToStatus->size() - 1;
+  else
+    r_times += first->status - 1;
+
   first->status = 1;
 }
 
-void WordList::moveToPos(unsigned i) {
-  if(pos[i] == last){
-    moveToLast();
-  }else {
-    ++(first->status);
-    //pos[0] is a tempory variable.
-    pos[0] = pos[i]->next;
-    pos[i]->next = first;
-    first = first->next;
-    pos[i]->next->next = pos[0];
-    advancePos(i);
-  }
-}
+void WordList::moveAfter(unsigned i) {
+  if(first == last)
+    return;
+  NodeWord *desPos = first;
+  NodeWord *tmp = first;
 
-void WordList::moveToLast() {
-  ++(first->status);
-  last->next = first;
-  last = last->next;
+  while(i-- > 0 && desPos != last)
+    desPos = desPos->next;
+
   first = first->next;
-  last->next = 0;
-  advancePos();;
+  tmp->next = desPos->next;
+  desPos->next = tmp;
+
+  if(desPos == last)
+    last = last->next;
 }
 
 void WordList::pop() {
-  pos[0] = first;
-  if(first == last) {
-    first = 0;
-    last = 0;
-    __size = 0;
-    delete pos[0];
-    for(int i = 0; i < 4; ++i)
-      pos[i] = 0;
-  }else {
-    first = first->next;
-    delete pos[0];
-    --__size;
-    advancePos();;
-  }
+  NodeWord *tmp = first;
+  first = first->next;
+  delete tmp;
+  --__size;
 }
 
-void WordList::add(unsigned size) {
-  NodeWord *tmp = new NodeWord(size - 1);
+void WordList::add() {
+  NodeWord *tmp = new NodeWord(++__maxIndex);
   last->next = tmp;
   last = last->next;
   ++__size;
 }
 
-void WordList::remove(unsigned size) {
+void WordList::remove() {
   NodeWord *tmp = first;
   NodeWord *max = first;
 
+  //Adjust the value of r_times.
+  if(first->status != 0)
+    r_times -= posToStatus->size() - first->status;
+  //Find the node with a max index in the list.
   while(tmp != last){
     tmp = tmp->next;
     if(max->index < tmp->index)
       max = tmp;
   }
 
-  if( max->index == (size - 1) ){
+  /**
+   * If the last word with the max index is already in the list, then
+   * it will be moved into the position which first->index refer to, and
+   * then pop_back the last position.
+   * So when the maxIndex is already in the list, it's index shoud equal
+   * to first->index.
+   **/
+  if( max->index == (__maxIndex--) )
     max->index = first->index;
-    pop();
-  }else
-    pop();
+  pop();
 }
 
-void WordList::advancePos(unsigned status) {
-  switch(status) {
-  case 0:  case 3:
-    if(pos[3] != last)
-      pos[3] = pos[3]->next;
-  case 2:
-    if(pos[2] != last)
-      pos[2] = pos[2]->next;
-  case 1:
-    if(pos[1] != last)
-      pos[1] = pos[1]->next;
-  }
-}
 
 } //Namespace freeRecite end.
 

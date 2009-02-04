@@ -44,8 +44,8 @@ public:
   ~Reciter()
   { /* Do Nothing Here! */ } 
 
-  //Do this test again with an random order.
-  bool redo(bool Random = false);
+  //Load the task. This method is a implementation of Scnner::load();
+  virtual bool load(time_t initID, bool Random = false);
 
   /**
    * Test with the result. The argument 'result' is true 

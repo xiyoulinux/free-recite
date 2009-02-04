@@ -55,19 +55,20 @@ bool Task::shouldReview() const {
   return reviewTime <= current;
 }
 
-bool Task::test(int mark) {
+int Task::test(int mark) {
   if(!shouldReview())
-    return false;
+    return -1;
   if( forgetCurve.pass(step,mark) ) { //If have passed
     ++step;
-    if(step == 8) //This task has finished
+    if(step == 8) {//This task has finished
       reviewTime = 0;
-    else
+      return 1;
+    }else
       reviewTime = forgetCurve.getReviewTime(step);
-    return true;
+    return 0;
   }else {  //If haven't passed
     reviewTime = forgetCurve.getReviewTime(step);
-    return false;
+    return -1;
   }
 }
 

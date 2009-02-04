@@ -43,13 +43,17 @@ namespace freeRecite {
 class WordList
 {
 public:
-
   //Initialize WordList using the size of the container object.
-  WordList(unsigned initSize = 0);
+  WordList(unsigned initSize = 0, const std::vector<unsigned> *initPt = 0);
+
+  //Destroy WordList.
   ~WordList();
   
   //Return the size of word list, put it here to make it inline.
   unsigned size() const;
+
+  //Return r_times;
+  int times() const;
 
   //Detect whether it is valid.
   bool isValid() const;
@@ -73,40 +77,33 @@ public:
    **/
   void pass();
 
-
   /**
    * If the input word is false, then you must call lose().
    * The return value is the status of the current word.
    **/
   void lose();
 
-
   /**
    * After you add one word to the contain, you must call
    * this method to synchronize the the contain withe the list.
    * The argument 'size' is the size of the new contain.
    **/
-  void add(unsigned size);
+  void add();
 
   /**
    * After you remove one word from the contain, you must call
    * this method to synchronize the the contain withe the list.
    * The argument 'size' is the size of the new contain.
    **/
-  void remove(unsigned size);
+  void remove();
 
 private:
-  //Move the first element one afterward, advance all the pointers
-  void moveToPos(unsigned i);
 
-  //Move the first element to the last, advance all the pointers.
-  void moveToLast();
+  //Move the first element one afterward, advance all the pointers
+  void moveAfter(unsigned i);
 
   //The element is passed, remove it form the WordList;
   void pop();
-
-  //Advance all pos to their next.
-  void advancePos(unsigned status = 0);
 
   struct NodeWord
   {
@@ -114,19 +111,26 @@ private:
       :index(initValue),status(0),next(0)
     { /* Do Nothing Here! */ }
     unsigned index;
-    int status;
+    unsigned status;
     NodeWord *next;
   };
+
   unsigned __size;
+  unsigned __maxIndex;
+  const std::vector<unsigned> *posToStatus;
+  int r_times;
   NodeWord *first;
   NodeWord *last;
-
-  NodeWord *pos[4]; //pos[0] used as a temporary variable.
 };
 
 inline
 unsigned WordList::size() const {
   return __size;
+}
+
+inline
+int WordList::times() const {
+  return r_times;
 }
 
 inline
@@ -141,7 +145,7 @@ int WordList::status() const {
 
 inline
 bool WordList::isValid() const {
-  return __size > 0;
+  return (__size > 0 && posToStatus != 0);
 }
 
 } //namespace freeRecite end.

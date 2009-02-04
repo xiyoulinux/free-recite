@@ -4500,7 +4500,7 @@
 [W]aggregate demand[T][M]总需求
 [W]aggregate index number[T][M]综合指数
 [W]aggregated[T];5gri'geitid[M]a.聚合的，合计的
-[W]aggregation[T];5gri'gei73n[M]n.聚合，组合；凝聚
+[W]aggregation[T]5gri'gei73n[M]n. 集合, 聚合, 集合体
 [W]aggression[T]3'gre73n[M]n.进攻；侵略；侵犯；侵害
 [W]aggressive[T]3'gresiv[M]adj．好斗的，进取的ag（一再）＋gress（走）＋ive→一再走→进取的
 [W]aggressively[T]3'gresivli[M]ad.积极地
@@ -5378,7 +5378,7 @@
 [W]apologetic[T]3;p6l3'd=etik[M]a.表示歉意的，道歉的
 [W]apologise[T][M]v.(to,for)道歉，认错
 [W]apologist[T]3'p6l3d=3ist[M]n.辩护士(尤指卫护基督教教义的辩护者)
-[W]apologize[T]3'p6l3d=aiz[M]v.道歉，认错；辩护，辩解 [=apologise]
+[W]apologize[T]3'p6l3d=aiz[M]vi. 道歉, 辩解
 [W]apologize for[T][M]为……而道歉
 [W]apologize to sb. for sth.[T][M]为某事向某人道歉
 [W]apologue[T][M]n.寓言
@@ -6619,7 +6619,7 @@
 [W]away from her studio[T][M]离开摄影室到外边去
 [W]awe[T]6:[M]n.敬畏，惊惧vt.使敬畏，使惊惧
 [W]awe-inspiring[T]'6:inspairi9[M]a.令人敬畏的；令人惊叹的
-[W]awesome[T]'6:s3m[M]a.[俚语]精彩的，绝妙的
+[W]awesome[T]'6:s3m[M]a. 引起敬畏的,可怕的
 [W]awestruck[T]'6:str2k[M]a.充满敬畏(或畏怯、惊奇)之心的
 [W]awful[T]'6:ful[M]a.极度的，极坏的；威严的，可怕的 ad.十分
 [W]awfully[T]'6:fuli[M]adv.非常地(正式用法)
@@ -11444,7 +11444,7 @@
 [W]cognition[T]k6g'ni73n[M]n.认知；认识；认识力
 [W]cognitive[T]'k6gnitiv[M]a.认知的，认识的，有感知的
 [W]cognizance[T]'k6gniz3ns[M]n.认知
-[W]cognizant[T]'k6niz3nt[M]adj. 已认识,既知道,晓得
+[W]cognizant[T]'k6gniz3nt[M]a. 察知的, 认识到的, 有认识能力的
 [W]cognomen[T]k6g'noum3n[M]n. 姓，绰号
 [W]cohabit[T]k3u'h5bit[M]v.(通常指未婚的)双方同居
 [W]cohabitation[T]k3uh5bi'tei73n[M]n.同居
@@ -11931,7 +11931,7 @@
 [W]compare...with...[T][M]把…和…进行比较
 [W]compared to[T][M]和…比较起来
 [W]compared with[T][M]与…相比
-[W]comparison[T]k3m'p5ris3n[M]n.比较, 对照；经比较得出的结论
+[W]comparison[T]k3m'p5risn[M]n. 比较, 对照, 比喻
 [W]compartment[T]k3m'p1:tm3nt[M]n.卧车包房,(客车车厢内的)隔间;分隔的空间
 [W]compartmentalize[T];k6mp1:t'mentl-aiz[M]v.把...分成各自独立的几部分
 [W]compass[T]'k2mp3s[M]n.罗盘，罗盘仪；[pl.]圆规；界限，范围
@@ -13959,7 +13959,7 @@
 [W]decrepitude[T]di'krepitju:d[M]n．衰老、破旧
 [W]decrescendo[T]di:'kri'7end3u[M]adj. & adv.渐弱的（地）
 [W]decry[T]di'krai[M]v.责难；轻视；贬低(价值)
-[W]decrypt[T][M]v.译，解释
+[W]decrypt[T]di:'kript[M]vt. 解...的密码【计】 解密, 译码
 [W]decumbence[T]di'k2mb3ns[M]n. 横卧，俯伏
 [W]dedicate[T]'dedikeit[M]vt.奉献，供奉；献身，致力；题词于(书)上
 [W]dedicate oneself to[T][M]把自己致力于；赋予自己
@@ -14294,6 +14294,7 @@
 [W]depose[T]di'p3uz[M]v.罢免，废黜(国王等)
 [W]deposit[T]di'p6zit[M]vt. 安置，使沉淀，储蓄；vi. 沉淀，存储；n. 沉积物，储蓄，押金
 [W]deposit account[T]di'p6zit 3'kaunt[M]存款帐户
+[W]deposit sth with sb[T][M]把某物寄放在(某人)处
 [W]depositer[T]di'p6zit3[M]n.储户
 [W]deposition[T];dep3'zi7(3)n[M]n.沉积作用，沉积物
 [W]depositor[T]di'p6zit3[M]n. 储户
@@ -17724,7 +17725,7 @@
 [W]facetious[T]f3'si:73s[M]adj．轻浮的，好开玩笑的
 [W]facial[T]'fei73l[M]a.面孔的, 面部用的
 [W]facile[T]'f5sil[M]a. 容易的, 灵巧的, 温和的
-[W]facilitate[T]f3'siliteit[M]vt.帮助,使容易,促进 to make easier : help bring about
+[W]facilitate[T]f3'siliteit[M]vt.帮助,使容易,促进
 [W]facilitation[T]f3;sili'tei73n[M]n.促进，推动
 [W]facilitative[T]f3'sili;teitiv[M]a.使便利的
 [W]facilitator[T]f3'sisliteit3[M]n.帮助者
@@ -19618,6 +19619,7 @@
 [W]fry[T]frai[M]n.(美)法式炸薯条 vt.油煎，油炸
 [W]frying-pan[T][M]n.长柄平锅；煎锅
 [W]fubsy[T]'f2bzi[M]adj. 肥胖的，矮胖的
+[W]fuck[T]f2k[M]vt.与...性交 vi. 性交 n.性交,些微,杂种 interj.他妈的,混帐
 [W]fuddle[T][M]使错乱
 [W]fuddled[T]'f2dld[M]醉的
 [W]fudge[T]f2d=[M]n.软糖 v.敷衍，回避(责任)
@@ -31712,7 +31714,7 @@
 [W]ornithology[T]6:ni'06l3d=3i[M]n.鸟类学, 鸟学论文
 [W]orotund[T]'1:out2nd[M]adj．（声音）宏亮的，说大话的
 [W]orphan[T]'6:f3n[M]n. 孤儿；a. 无父母的
-[W]orphanage[T]'6:f3nid=3[M]n. 孤儿院
+[W]orphanage[T]'6:f3nid=[M]n. 孤儿院
 [W]orthodontic[T];6:03'd6ntik[M]n.整牙学
 [W]orthodontics[T]'6:03'd6ntiks[M]n．畸齿矫正学
 [W]orthodontist[T];6:03'd6ntist[M]n.牙齿矫正医师
@@ -39978,7 +39980,7 @@
 [W]sought[T]s6:t[M]seek的过去式 vt.寻求，寻找
 [W]soul[T]s3ul[M]n.灵魂，心灵；人；精神；精髓，精华
 [W]soulless[T]'s3ul-l3s[M]a.没有精神的，没有灵魂的
-[W]sound[T]saund[M]adj. 稳固的, 健全的,可靠的,合理的,有效的,彻底的
+[W]sound[T]saund[M]n.声音,语音 a.健全的,可靠的,合理的 ad.彻底地,充分地 vi.发出声音 vt.使发声,宣告
 [W]sound a warning[T][M]发出警告
 [W]sound advice[T][M]忠告
 [W]sound bandwidth[T][M]声音带宽
@@ -41544,7 +41546,7 @@
 [W]summertime[T]'s2m3taim[M]n.夏季
 [W]summit[T]'s2mit[M]n.最高点，顶峰 a.最高级的，政府首脑间的
 [W]summit meeting[T][M]最高级会议
-[W]summon[T]'s2m3n[M]v.使出（力气），鼓起(勇气)，振作（精神)
+[W]summon[T]'s2m3n[M]vt. 召唤, 召集, 号召, 振奋, 唤起, 鼓起
 [W]summon up[T][M]鼓起(勇气)，奋起；唤起
 [W]summons[T]'s2m3nz[M]n.传票，用传票传唤
 [W]sumo wrestler[T];su:m3u 'resl3[M]n.相朴运动员
