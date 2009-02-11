@@ -45,35 +45,52 @@ extern Dict dictionary;
 class Dict
 {
 public:
-  Dict()
-  { /* Do nothing! */ }
-  ~Dict()
-  { /* Do nothing! */ }
-
+  Dict();
+  ~Dict();
+  //Initialize the dictionary
   bool load();
 
+  //Fine the word 'word' in dictionaries
   bool lookUp(const std::string &word);
 
+  //Modify the local dictionary.
   bool modify(const std::string &item);
 
+  //Save the local dictionary when you modified
   bool save();
 
-  //Define the mothed here to make them be inline.
-  const std::string &word() const {
-    return dictItem.getW();
-  }
-  
+  //Get the current word
+  const std::string &word() const;
+
+  //Get the current phonetics
   const std::string &phonetics() const;
   
-  const std::string &translation()const { 
-    return dictItem.getM();
-  }
+  //Get the translation
+  const std::string &translation() const;
 
 private:
+  bool findInGlobl(const std::string &swatch);
+
   DictItem dictItem;
+  std::ifstream *ifsgdic;
   std::map<std::string,std::string> dict;
 };
 
+inline
+Dict::Dict()
+  : ifsgdic(0)
+{ /* Do nothing! */ }
+
+
+inline
+const std::string &Dict::word() const {
+  return dictItem.getW();
+}
+
+inline
+const std::string &Dict::translation()const { 
+  return dictItem.getM();
+}
 
 
 } // namespace freeRecite end

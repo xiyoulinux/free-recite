@@ -1,6 +1,6 @@
 #include <string>
 #include <cstdlib>
-#include "Cui.h"
+#include <Cui.h>
 
 using namespace std;
 

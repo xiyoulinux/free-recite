@@ -90,6 +90,9 @@ public:
   //Get the active tasks' ID.
   const std::vector<time_t> &getActiveTasks() const;
 
+  //Get all of the tasks.
+  const std::map<time_t,Task> &getAllTasks() const;
+
   /**
    * This method is used to test whether the mark you got can pass 
    * this test. If you pass it, the task will come to the next step,

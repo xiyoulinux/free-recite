@@ -1,8 +1,10 @@
 #!/bin/sh
 if [ ! -d $HOME/.FreeRecite/tasks ] ; then
     echo "You may be first use Free Recite, initialize it!"
-    mkdir -p $HOME/.FreeRecite/tasks
-    cp -R /usr/share/FreeRecite/* $HOME/.FreeRecite
+    mkdir $HOME/.FreeRecite
+    touch $HOME/.FreeRecite/freeRecite.dict
+    cp -R /usr/share/FreeRecite/tasks $HOME/.FreeRecite/
+    cp /usr/share/FreeRecite/freeRecite.mgr $HOME/.FreeRecite/freeRecite.mgr
 else
-    echo "Free Recite has been initialized before!"
+    echo "Free Recite has been initialized before!\n"
 fi

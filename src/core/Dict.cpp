@@ -6,6 +6,11 @@
 
 namespace freeRecite {
 
+Dict::~Dict() {
+  if(ifsgdic != 0) 
+    delete ifsgdic;
+}
+
 bool Dict::load() {
   std::string dictName = configHolder.dictFile().c_str();
   std::ifstream ifs(dictName.c_str());
@@ -18,16 +23,55 @@ bool Dict::load() {
     if( dictItem.refer(lineStr) )
       dict[dictItem.getW()] = lineStr;
   }
+
+  ifsgdic = new std::ifstream("/usr/share/FreeRecite/freeRecite.dict");
+  if(!ifsgdic->is_open())
+    return false;
+
   return true;
 }
 
 bool Dict::lookUp(const std::string &word) {
+  //Find in local dictionary.
   std::map<std::string,std::string>::iterator itr = dict.find(word);
-  if( itr == dict.end() )
-    return false;
-  else
+  if( itr != dict.end() ) {
     dictItem.refer(itr->second);
-  return true;
+    return true;
+  }
+
+  //Find in global dictionary.   
+  return findInGlobl(word);
+}
+
+bool Dict::findInGlobl(const std::string &swatch) {
+  // get length of file
+  ifsgdic->seekg(0,std::ios::end);
+  int length = ifsgdic->tellg();
+  int before = 0;
+  int after = length;
+  int current = -1;
+  std::string line;
+  while(after-before>1) {
+    ifsgdic->seekg((after+before)/2);
+    ifsgdic->ignore(std::numeric_limits<int>::max(),'\n');
+    current = ifsgdic->tellg();
+    getline(*ifsgdic,line);
+    if(!dictItem.refer(line))
+       return false;
+    if(swatch > dictItem.getW())
+      before = (after+before)/2;
+    else if(swatch < dictItem.getW())
+      after = (after+before)/2;	
+    else if( swatch == dictItem.getW() )
+      return true;
+  }
+  if(before == 0) {
+    ifsgdic->seekg(0);
+    getline(*ifsgdic,line);
+    if(swatch == dictItem.getW())
+      return true;
+  }
+  return false;
 }
 
 bool Dict::modify(const std::string &item) {
