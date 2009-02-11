@@ -13214,7 +13214,7 @@
 [W]crispy chicken[T][M]脆皮鸡
 [W]crisscross[T]'kriskr6s[M]vt.往返奔波于，交叉往来
 [W]criteria[T]krai'tiri3[M]n. (criterion的复数)标准
-[W]criterion[T]krai'ti3ri3n[M]n. 危急关头，(政治、经济上的)危机，决定性刻，转变期
+[W]criterion[T]krai'ti3ri3n[M]n.标准,准则,规范
 [W]critic[T]'kritik[M]n.批评家，评论家；吹毛求疵的人，挑剔的人
 [W]critical[T]'kritik3l[M]a.爱挑剔别人的；批评的；重大的，决定性的，危险的, 临界的
 [W]critical point[T][M]临界点
@@ -13329,7 +13329,7 @@
 [W]cryptic[T]'kriptik[M]adj. 秘密的,神秘的,含义模糊的
 [W]cryptical[T]'kriptik3l[M]a.秘密的,神秘的,隐义的
 [W]cryptogram[T]'kript3gr5m[M]n．暗号，密码
-[W]cryptographic[T]kript3'gr5fik[M]密码
+[W]cryptographic[T]kript3'gr5fic[M]a.加密的
 [W]cryptography[T]krip't6gr3fi[M]密码术，密码系统
 [W]cryptomeria[T]kript3'miri3[M]日木杉
 [W]crystal[T]'krist3l[M]n.水晶，水晶饰品，结晶体；最好的玻璃器皿
@@ -14302,7 +14302,7 @@
 [W]depot[T]'dep3u[M]n.仓库，储藏处；公共汽车站；火车站
 [W]depraved[T]di'preivd[M]adj.堕落的,腐化的
 [W]depravity[T]di'pr5viti[M]n. 堕落,腐败,邪恶
-[W]deprecate[T]'deprikeit[M]v.声明不赞成,抨击,反对
+[W]deprecate[T]'depr3keit[M]vt.声明不赞成,抗议,反对 【法】对...表示不赞成,反对
 [W]deprecatory[T]'deprikeit3ri[M]a.不赞成的
 [W]depreciate[T]di'pri:7ieit[M]v. 减价，贬值；轻视
 [W]depreciation[T]di;pri:7i'ei7(3)n[M]n.折旧；贬值，跌价
@@ -14314,7 +14314,7 @@
 [W]depressed[T]di'prest[M]a.沮丧的，抑郁的；不景气的，萧条的
 [W]depressing[T]di'presi9[M]a.令人沮丧的；令人忧愁的
 [W]depression[T]di'pre73n[M]n.压抑，沮丧；不景气，萧条期；凹地，凹陷
-[W]deprivation[T]dipri'vei7(3)n[M]n.匮乏；丧失；夺去，贫困
+[W]deprivation[T],depri'vei73n[M]n.剥夺,剥夺官职,免职
 [W]deprive[T]di'praiv[M]vt.剥夺，使丧失；免去…的职务
 [W]deprive of[T][M]剥夺
 [W]deprive sb. of sth[T][M]夺去或剥夺某人(某种权利)……
@@ -14484,7 +14484,7 @@
 [W]detail[T]'di:teil[M]n.细节,详情；枝节，琐事 v.详述，详细说明
 [W]detailed[T]'di:teild[M]a.详细的，详尽的；极注意细节的；完全的
 [W]detain[T]di'tein[M]vt.拘留，扣留；留住，耽搁
-[W]detect[T]di'tekt[M]v.察觉，发觉，发现；探测，侦查
+[W]detect[T]di'tekt[M]vt.发现,察觉,探测
 [W]detectable[T]di'tekt3bl[M]adj.可察觉的，可查明的
 [W]detecting system[T][M]检测系统
 [W]detection[T]di'tek73n[M]n.觉察，发觉；侦察；探测
@@ -16036,7 +16036,7 @@
 [W]dwarf[T]dw6:f[M]n．侏儒，矮小的植物v．阻碍…的正常发育
 [W]dwarfish[T][M]a.像侏儒的，矮小的
 [W]dwarfishness[T][M]n.矮小
-[W]dwell[T]dwel[M]v.(at，in)定居，住，寓于
+[W]dwell[T]dwel[M]vi. (at，in)定居，住，寓于
 [W]dwell on[T][M]老是想着；详述；强调
 [W]dweller[T]'dwel3[M]n.居住者，住客
 [W]dwelling[T]'dweli9[M]n.住宅，住所，寓所
@@ -16241,7 +16241,7 @@
 [W]edition[T]p3'zi73n[M]n.位置；地位，职务；姿势；立场vt.安置
 [W]editor[T]'edit3[M]n.校订者；(文字)编辑；编辑，主编
 [W]editor-in-chief[T]'4dit3-in-'t7if[M]总编辑
-[W]editorial[T];edi't6:ri3l[M]a.编者的；社论的n.(报刊的)社论，重要评论
+[W]editorial[T],edi't6:ri3l[M]n.社论,重要评论 a.编者的;社论的
 [W]editorship[T][M]n.the position of an editor
 [W]educable[T]'edjuk3bl[M]adj.可教育的，能学好东西的
 [W]educate[T]'edju(:)keit[M]vt./vi.教育；培养；训练
@@ -16429,7 +16429,7 @@
 [W]elegy[T]'elid=i[M]n.哀歌、挽歌
 [W]element[T]'elim3nt[M]n.元素；要素，(自然、社会)环境；成分
 [W]elemental[T]eli'mentl[M]adj.自然力的,失去控制的
-[W]elementary[T]eli'ment3ri[M]a. 简单的，容易的，初级的，基础的
+[W]elementary[T],eli'ment3ri[M]a.简单的,容易的,初级的,基础的
 [W]elementary education[T][M]初等/基本教育(指小学)
 [W]elementary particle[T][M]基本粒子
 [W]elementary school[T][M]（美国的）小学
@@ -16964,7 +16964,7 @@
 [W]equal[T]'i:kw3l[M]a. 相等的，相同的，平等的，胜任的；n. 地位相等的人，同辈；vt. 比得上，等于
 [W]equal sign[T][M]等号
 [W]equal to[T][M]等于，和...相等，相当于
-[W]equality[T]i'kw6liti[M]n.平等，同等the quality of being equal
+[W]equality[T]i:'kw6liti[M]n. 平等, 均匀, 相等
 [W]equalization[T]i:kw3lai'zei73n[M]均衡
 [W]equalization fund[T][M]平准基金
 [W]equalizer[T]'i:kw3laiz3[M]均衡器
@@ -17276,7 +17276,7 @@
 [W]exaction[T]ig'z5k73n[M]n.强求，强征，杂税
 [W]exactitude[T]ig'z5ktitju:d[M]n.极端的正确性或精确性
 [W]exactly[T]ig'z5ktli[M]ad.正确地，精确地；恰好地，正好地；正是
-[W]exaggerate[T]ig'z5d=33reit[M]adj. 夸张的；过大的
+[W]exaggerate[T]ig'z5d=3reit[M]vi&vt. 夸大, 夸张
 [W]exaggerated[T]ig'z5d=33reitid[M]adj.言过其辞的
 [W]exaggeration[T]ig;z5d=3'rei73n[M]n.夸张，夸大
 [W]exalt[T]ig'z6:lt[M]v.提升，提拔；高举；赞扬；吹捧
@@ -18834,7 +18834,7 @@
 [W]flow diagram[T][M]流程图
 [W]flow from[T][M]有(某些结果)，来自
 [W]flow text[T][M]流动文本
-[W]flowchart[T][M]流程图
+[W]flowchart[T]fl3ut71:t[M]流程图
 [W]flower[T]'flau3[M]n.花，花卉；开花  vi. 开花, 旺盛, 成熟 vt. 用花装饰, 使开花
 [W]flower bed[T][M]花坛
 [W]flower pot[T][M]花盆
@@ -18848,7 +18848,7 @@
 [W]flub[T]fl2b[M]v. 搞坏，搞糟
 [W]fluctuate[T]'fl2kt7ueit[M]vi.变动，波动；动摇 vt.使波动，使起伏
 [W]fluctuation[T]fl2ktju'ei73n[M]n. (物价的)波动，涨落，周期性变动，脉动
-[W]fluency[T][M]n.a smooth, easy flow 流利，流畅
+[W]fluency[T]'flu:3nsi[M]n.流畅,雄辩,善辩
 [W]fluent[T]'flu:3nt[M]a.流利的；流畅的；(说话、阅读)流利的
 [W]fluently[T]'flu:3ntli[M]ad.流利地，流畅地
 [W]fluff[T]fl2f[M]n.松软的绒毛；软毛 vt抖开；做错
@@ -24288,7 +24288,7 @@
 [W]incarcerate[T]in'k1:s3reit[M]vt. confine or imprison 幽闭；监禁
 [W]incarnadine[T][M]a.深红色的；血色的
 [W]incarnate[T]in'k1:neit[M]adj.化身的, 人体化的, 肉色的
-[W]incarnation[T];ink1:'nei73n[M]n.体现；作为…化身的人(或物)，化身
+[W]incarnation[T],ink1:'nei73n[M]n. 典型, 特殊阶段, 化身, 体现
 [W]incendiary[T]in'sendi3ri[M]a.放火的，纵火的；煽动性的
 [W]incense[T]'insens, in'sens[M]v.激怒　n.香，焚香时的烟；香气
 [W]incensed[T][M]盛怒的
@@ -25737,7 +25737,7 @@
 [W]jumble[T]'d=2mb3l[M]v.(使)混乱 n.杂乱的一团(东西或想法)
 [W]jumble sale[T]'d=2mb3l ;seil[M]n.废旧杂货廉价拍卖
 [W]jumbled[T]'d=2mbld[M]adj.混乱的；杂乱的
-[W]jumbo[T]'d=32mbou[M]n.体大而笨拙的人;庞然大物,显赫的人
+[W]jumbo[T]'d=2mb3u[M]n.体大而笨拙的人;庞然大物,显赫的人
 [W]jump[T]d=2mp[M]v.跳跃，跳动 n.跳跃，跳动；暴涨，猛增
 [W]jump about[T][M]到处跳跃
 [W]jump at[T][M]匆匆作出(结论等)；欣然接受，急切地抓住
@@ -26469,7 +26469,7 @@
 [W]lawn mower[T][M]切割机
 [W]lawn sprinkler[T][M]草坪撒水器
 [W]lawn-mower[T]'l6:n 'm3u3[M]n.草坪割草机
-[W]lawnmower[T][M]n.割草机
+[W]lawnmower[T]l6:nmau3[M]n.割草机
 [W]laws of motion[T][M]运动定律
 [W]lawsuit[T]'l6:sju:t[M]n.诉讼(案件)
 [W]lawyer[T]'l6:j3[M]n.律师；法学家
@@ -27368,7 +27368,7 @@
 [W]longan[T][M]n.龙眼
 [W]longevity[T]l6n'd=eviti[M]n.长寿；长命
 [W]longhand[T]'l69h5nd[M]n.普通写法(与shorthand速记相对而言)
-[W]longing[T]'l69i9[M]n.渴望 a.显示渴望的
+[W]longing[T]'l69i9[M]n.渴望 a.渴望的, 热望的
 [W]longitude[T]'l6nd=3itju:d[M]n.经度，经线
 [W]longitudinal[T];l6nd=i'tju:d3n3l[M]a.纵的，纵向的；经度的
 [W]longs[T][M]长期证券；头户，买空者
@@ -31083,7 +31083,7 @@
 [W]ombrometer[T]6m'br6mit3[M]n. 雨量器
 [W]ombudsman[T]'6mbudzm3n[M]n.负责处理投诉的人，投诉部门负责人
 [W]omelet[T]'6mlit[M]n.煎蛋卷，炒鸡蛋
-[W]omelette[T][M]n.煎蛋
+[W]omelette[T]'6mlit[M]n. 煎蛋卷, 炒蛋
 [W]omen[T]'3umen[M]n．征兆、预兆
 [W]ominous[T]'6min3s[M]a.预兆的，不祥的，不吉利的
 [W]ominously[T]'6min3sli[M]ad.有预兆的，不祥的
@@ -32612,7 +32612,7 @@
 [W]pathologic[T][M]a.病理的
 [W]pathological[T];p503'l6d=ik3l[M]a.病理学的
 [W]pathologically[T];p503'l6d=ik3li[M]adv.病理性地，病理学地
-[W]pathology[T]p5'06l3d=3i[M]n. 病理学,病理,病状
+[W]pathology[T]p5'06l3d=i[M]n.病理学,病理,病状
 [W]pathophysiology[T][M]n.病理生理学
 [W]pathos[T]'pei06s[M]n.令人怜悯、同情的力量或因素
 [W]pathway[T]'p1:0wei[M]n.小路，小径(=path)
@@ -34201,7 +34201,7 @@
 [W]precondition[T];pri:k3n'di73n[M]v.预先影响或处理，使先有准备
 [W]precursor[T]pri'k3:s3[M]n. 先驱者,前导,先进者
 [W]precursory[T];pri:'k3:s3ri[M]adj.先驱的
-[W]predate[T]'pri:'deit[M]n.在日期上早于
+[W]predate[T]'pri:'deit[M]v. 提早日期;预期;居先;预料
 [W]predator[T]'pred3t3[M]n.捕食者(动物)，掠夺者；食肉动物
 [W]predatory[T]'pred3t3ri[M]a.食肉成性的；掠食性的
 [W]predecessor[T]'pri:dises3[M]n.前身，(被取代的)原有的事物；前辈；前任
@@ -34829,7 +34829,7 @@
 [W]protect...from...[T][M]保护…免受
 [W]protected[T]pr3'tektid[M]adj.受到保护的
 [W]protected mode[T][M]保护模式
-[W]protection[T]pr3'tek73n[M]n.1.保护 2.保护人（物）
+[W]protection[T]pr3'tek73n[M]n.保护,防卫,贸易保护制度【计】 保护
 [W]protectionism[T]pr3'tek73niz3m[M]n.贸易保护主义
 [W]protectionist[T]pr3't3k73nist[M]adj.保护(贸易)制的
 [W]protective[T]pr3'tektiv[M]adj.保卫的，防御的，受护的，呵护的
@@ -46001,7 +46001,7 @@
 [W]verge[T]v3:d=[M]n.边缘[同]brink；边界 v.接近，濒临
 [W]verifiability[T]'veri'fai3'biliti[M]n.可证实性
 [W]verifiable[T]'verifai3b(3)l[M]a. 能证实的
-[W]verification[T][M]n.proof by evidence;confirmation
+[W]verification[T],verifi'kei73n[M]n.证实,查证,证明属实 【计】验证
 [W]verified[T]'verifaid[M]adj.检验的,核实的
 [W]verifier[T][M]校验机
 [W]verify[T]'verifai[M]vt.prove to be true,conform 证实；证明

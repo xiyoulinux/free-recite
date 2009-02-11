@@ -161,6 +161,11 @@ const std::vector<time_t> &Manager::getActiveTasks() const{
   return activeID;
 }
 
+const std::map<time_t,Task> &Manager::getAllTasks() const{
+  return allTasks;
+}
+
+
 //Get the number of the active tasks.
 int Manager::getActiveTaskNum() const {
   return activeID.size();
@@ -175,6 +180,7 @@ const std::string &Manager::getTaskName(time_t taskID)const {
 time_t Manager::getNextTime(time_t taskID) const {
   return (allTasks.find(taskID)->second).getReviewTime();
 } 
+
 //Get the step of the task.
 int Manager::getTaskStep(time_t taskID)const {
   return (allTasks.find(taskID)->second).getStep();

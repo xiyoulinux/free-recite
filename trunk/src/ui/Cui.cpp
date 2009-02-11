@@ -46,6 +46,9 @@ void CUI::run(int argc, char *argv[]) {
     }else if(!strcmp(argv[1],"--version")) {
       std::cout << "Free Recite version 1.0" << std::endl;
       return;      
+    }else if(!strcmp(argv[1],"all")) {
+      showAll();
+      return;
     }else if(!strcmp(argv[1],"cls")) {
       cleanStress();
       return;
@@ -129,18 +132,23 @@ void CUI::createNew(const char *fileName) {
   getLine(name);
   while(ifs.good()) {
     std::getline(ifs,word);
-    if(!dictionary.lookUp(word) && !word.empty()) {
+    while(!dictionary.lookUp(word) && !word.empty()) {
       std::cout << '\"' << word << '\"' 
 		<< " can't be fond in your dictionary"<<std::endl
-		<< "Remove(R) or Modify(M) it? (R/m)" << std::endl;
+		<< "Remove(R),Modify(M) or Add to dictionary(A)? (R/m/a)"
+		<< std::endl;
       getLine(cmd);
 
-      if(cmd == "M" || cmd == "m")
-	while(!modify(word))
-	  /* An empty sentance. */;
-      else
+      if(cmd == "A" || cmd == "a")
+	while(!modify(word)) /* An empty sentance. */;
+      else if(cmd == "M" || cmd == "m") {
+	std::cout << "Input the new word: ";
+	getLine(word); //Get a new word from the user.
 	continue;
+      } else
+	std::getline(ifs,word); //Read a new word from file.
     }
+    
     wordSet.insert(word);
   }
   if(manager.createTask(wordSet,name.c_str(),30)) {
@@ -156,7 +164,6 @@ void CUI::exportFromFile(const char *fileName) {
   std::string tmpWord;
   std::set<std::string> wdSet;
   if(!ifs.is_open()) {
-    std::cerr << "There's no words should be remind;p!" << std::endl;
     return;
   }
   while(ifs.good()) {
@@ -203,7 +210,6 @@ void CUI::test(time_t taskID) {
     std::cout << "There's no this task!" << std::endl;
     return;
   }
-  std::string inputStr;
   if(!tester.load(taskID)) {
     std::cerr << "error when load words!" << std::endl;
     return;
@@ -211,58 +217,8 @@ void CUI::test(time_t taskID) {
   time_t startTime = 0;
   time_t endTime = 0;
   time(&startTime);
-  bool result;
-  while(tester.isValid()) {
-    if(dictionary.lookUp(tester.getWord())){
-      clear();
-      std::cout <<" Amount: "<< tester.capability()
-		<<" R_Num: " << tester.size()
-		<<" R_Times: "<< tester.times()<<std::endl;
-      std::cout<<"[M]: "<<dictionary.translation()<<std::endl;
-      std::cout <<"**********************************************" << std::endl;
-      std::cout<<"*Input : ";
-      getLine(inputStr);
-      if(inputStr == "\\modify"){
-	modify(tester.getWord());
-	continue;
-      }else if(inputStr == "\\add"){
-	std::cout << "Input new word: ";
-	getLine(inputStr);
-	tester.add(inputStr);
-	std::cout << "SUCCESS!" << std::endl;
-	continue;
-      } else if(inputStr == "\\rm" || inputStr == "remove"){
-	inputStr = tester.getWord();
-	tester.remove(inputStr);
-	std::cout << "SUCCESS!" << std::endl;
-	continue;
-      } else if(inputStr == "\\stop") {
-	return;
-      }
-      result = ( inputStr == tester.getWord() ? true : false );
-      std::cout << "*Answer: " << dictionary.word();
-      if( !dictionary.phonetics().empty() )
-	std::cout << "  /" << dictionary.phonetics() << "/" << std::endl;
-      else
-	std::cout << std::endl;
-      std::cout <<"**********************************************" << std::endl;
-      showResult(result);
-      tester.test(result);
-    } else { //If the dictionary can't look up the current word
-      std::cout << '\"'	<< tester.getWord() << '\"'
-		<< " can't be found in your dictionary."
-		<< "\n Modify Or Remove it from task(M/r) ";
-      std::string m_r;
-      getLine(m_r);
-      if(m_r == "R" || m_r == "r") {
-	inputStr = tester.getWord();
-	tester.remove(inputStr);
-	std::cout << "SUCCESS!" << std::endl;
-      } else {
-	modify(tester.getWord());
-      }
-    } 
-  }  //End of while()
+
+  scanProcess(tester);
 
   time(&endTime);
   startTime = endTime - startTime;
@@ -289,14 +245,12 @@ void CUI::test(time_t taskID) {
 }
 
 void CUI::recite(time_t taskID) {
-
   if(!manager.hasTask(taskID)) {
     std::cerr<< "There's no this task!" << std::endl;
     return;
   }
 
   Reciter reciter;
-  std::string inputStr;
   if(!reciter.load(taskID)) {
     std::cerr << "error when load words!" << std::endl;
     return;
@@ -304,58 +258,7 @@ void CUI::recite(time_t taskID) {
   time_t startTime = 0;
   time_t endTime = 0;
   time(&startTime);
-  while(reciter.isValid()) {
-    if(dictionary.lookUp(reciter.getWord())){
-      clear();
-      std::cout <<" Amount: "<< reciter.capability()
-		<<" R_Num: " << reciter.size()
-		<<" R_Times: "<< reciter.times()<<std::endl;
-      std::cout<<"[M]: "<<dictionary.translation()<<std::endl;
-      std::cout <<"**********************************************" << std::endl;
-      std::cout<<"*Input : ";
-      getLine(inputStr);
-      if(inputStr == "\\modify"){
-	modify(reciter.getWord());
-	continue;
-      } else if(inputStr == "\\add"){
-	std::cout << "Input new word: ";
-	getLine(inputStr);
-	reciter.add(inputStr);
-	std::cout << "SUCCESS!" << std::endl;
-	continue;
-      } else if(inputStr == "\\rm" || inputStr == "remove"){
-	inputStr = reciter.getWord();
-	reciter.remove(inputStr);
-	std::cout << "SUCCESS!" << std::endl;
-	continue;
-      } else if(inputStr == "\\stop"){
-	return;
-      }
-      bool result = ( inputStr == reciter.getWord() ? true : false );
-      std::cout << "*Answer: " << dictionary.word();
-      if( !dictionary.phonetics().empty() )
-	std::cout << "  /" << dictionary.phonetics() << "/" << std::endl;
-      else
-	std::cout << std::endl;
-      std::cout <<"**********************************************" << std::endl;
-      showResult(result);
-      reciter.test(result);
-    }else { //If the dictionary can't look up the current word
-      std::cout << '\"'	<< reciter.getWord() << '\"'
-		<< " can't be found in your dictionary."
-		<< "\n Modify Or Remove it from task(M/r) ";
-      std::string m_r;
-      getLine(m_r);
-      if(m_r == "R" || m_r == "r") {
-	inputStr = reciter.getWord();
-	reciter.remove(inputStr);
-	std::cout << "SUCCESS!" << std::endl;
-      } else {
-	modify(reciter.getWord());
-      }
-    }
-  }
-
+  scanProcess(reciter);
   time(&endTime);
   startTime = (endTime - startTime)/60;
   time_t usedTime = startTime > 0 ? startTime : 1;
@@ -426,23 +329,62 @@ void CUI::showActive() {
     }
   }
   else {
-    std::cout << "There's " << manager.getActiveTaskNum()
-	      << " tasks should review." << std::endl;
-    std::cout << std::setw(3) << std::setfill(' ') << std::left << "N" 
-	      << std::setw(20) << std::setfill(' ') << std::left << "Name"
+    std::cout << std::setw(5) << std::setfill(' ') << std::left << "N" 
+	      << std::setw(25) << std::setfill(' ') << std::left << "Name"
 	      << std::setw(5) << std::setfill(' ') << std::left  << "Step"
-	      << std::setw(10) << std::setfill(' ') << std::right  << "ID    "
+	      << std::setw(10) << std::setfill(' ') << std::left  << "     ID"
 	      <<std::endl;
 
     for(int i = 0; i < manager.getActiveTaskNum(); ++i) {
-      std::cout << std::setw(3) << std::setfill(' ') << std::left << i 
-		<< std::setw(20) << std::setfill(' ') << std::left
-		<< manager.getTaskName(manager.getActiveTasks().at(i))
+      std::cout << std::setw(5) << std::setfill(' ') << std::left << i+1
+		<< std::setw(25) << std::setfill(' ') << std::left
+		<< manager.getTaskName(manager.getActiveTasks().at(i)) << ' '
 		<< std::setw(5) << std::setfill(' ') << std::left
 		<< manager.getTaskStep(manager.getActiveTasks().at(i))
 		<< std::setw(10) << std::setfill(' ') << std::right
 		<< manager.getActiveTasks().at(i)
 		<< std::endl;
+    }
+  }
+}
+
+void CUI::showAll() {
+  if(!manager.refresh()) {
+    std::cout << "The configure file is broken!" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+  if(manager.getAllTasks().empty()) {
+    std::cout << "There's no new task should be review,type \"new\" to creat one."
+	      << std::endl;
+  }
+  else {
+    std::cout << "There's " << manager.getAllTasks().size()
+	      << " tasks should review." << std::endl;
+    std::cout << std::setw(5) << std::setfill(' ') << std::left << "N" 
+	      << std::setw(20) << std::setfill(' ') << std::left << "Name"
+	      << std::setw(5) << std::setfill(' ') << std::left  << "Step"
+	      << std::setw(12) << std::setfill(' ') << std::left  << "       ID"
+	      << std::setw(12) << std::setfill(' ') << std::left << "       Review Time"
+	      <<std::endl;
+
+    std::map<time_t,Task>::const_iterator itr = manager.getAllTasks().begin();
+    unsigned i = 0;
+    while(++i,itr != manager.getAllTasks().end()) {
+      std::cout << std::setw(5) << std::setfill(' ') << std::left << i
+		<< std::setw(20) << std::setfill(' ') << std::left
+		<< manager.getTaskName(itr->first) << ' '
+		<< std::setw(5) << std::setfill(' ') << std::left
+		<< manager.getTaskStep(itr->first)
+		<< std::setw(12) << std::setfill(' ') << std::right
+		<< itr->first << "  ";
+      time_t nextTime = manager.getNextTime(itr->first);
+      struct tm * timeinfo;
+      char buffer[30];
+      timeinfo = localtime(&nextTime);
+      strftime(buffer,30,"%Y.%m.%d %H:%M:%S",timeinfo);
+      std::cout << std::setw(12) << std::setfill(' ') << std::left
+		<< buffer << std::endl;
+      ++itr;
     }
   }
 }
@@ -473,20 +415,104 @@ void CUI::showResult(bool result) {
   }
 }
 
+void CUI::scanProcess(Scanner &scanner) {
+  bool result;
+  std::string inputStr;
+  while(scanner.isValid()) {
+    if(dictionary.lookUp(scanner.getWord())){
+      clear();
+      std::cout <<" Type \'\\help\' to show the implicit command!" 
+		<< std::endl;
+      std::cout <<" Amount: "<< scanner.capability()
+		<<" R_Num: " << scanner.size()
+		<<" R_Times: "<< scanner.times()<<std::endl;
+      std::cout<<"[M]: "<<dictionary.translation()<<std::endl;
+      std::cout <<"**********************************************" << std::endl;
+      std::cout<<"*Input : ";
+      getLine(inputStr);
+
+      if(inputStr == "\\hint") {
+	std::cout << "*Hint  : " << dictionary.word().at(0);
+	for(unsigned i = 1; i < dictionary.word().size(); ++i)
+	  std::cout << '_';
+	if( !dictionary.phonetics().empty() )
+	  std::cout << "  /" << dictionary.phonetics() << "/";
+	std::cout << std::endl <<"*Input : ";
+	getLine(inputStr);
+      } 
+
+      if(inputStr == "\\help"){
+	scanProHelp();
+	continue;
+      } else if(inputStr == "\\modify"){
+	modify(scanner.getWord());
+	continue;
+      } else if(inputStr == "\\add"){
+	std::cout << "Input new word: ";
+	getLine(inputStr);
+	scanner.add(inputStr);
+	std::cout << "SUCCESS!" << std::endl;
+	continue;
+      } else if(inputStr == "\\rm"){
+	inputStr = scanner.getWord();
+	scanner.remove(inputStr);
+	std::cout << "SUCCESS!" << std::endl;
+	continue;
+      } else if(inputStr == "\\stop") {
+	exit(EXIT_SUCCESS);
+      }
+      result = ( inputStr == scanner.getWord() ? true : false );
+      std::cout << "*Answer: " << dictionary.word();
+      if( !dictionary.phonetics().empty() )
+	std::cout << "  /" << dictionary.phonetics() << "/";
+      std::cout << std::endl;
+      std::cout <<"**********************************************" << std::endl;
+      showResult(result);
+      scanner.test(result);
+    } else { //If the dictionary can't look up the current word
+      std::cout << '\"'	<< scanner.getWord() << '\"'
+		<< " can't be found in your dictionary."
+		<< "\n Modify Or Remove it from task(M/r) ";
+      std::string m_r;
+      getLine(m_r);
+      if(m_r == "R" || m_r == "r") {
+	inputStr = scanner.getWord();
+	scanner.remove(inputStr);
+	std::cout << "SUCCESS!" << std::endl;
+      } else {
+	modify(scanner.getWord());
+      }
+    } 
+  }  //End of while()
+}
+
+
+void CUI::scanProHelp() {
+  std::cout << std::endl << "usage: \\command " << std::endl
+	    << "\\help    Show this help information" << std::endl
+	    << "\\add     Add new word to this task" << std::endl
+	    << "\\rm      Remove the current word from this task" << std::endl
+	    << "\\modify  Modify the current word in the dictionary" << std::endl
+	    << "\\hint    Get the hint of current word" << std::endl
+	    << "\\stop    Stop Free Recite at once" << std::endl;
+}
+
 void CUI::help() {
   std::cout << "usage: frt [--version]  [--help] COMMAND [ARGS]" << std::endl
 	    << "The most commonly used git commands are:" << std::endl
+	    << " all                 Show the detail of all the tasks"
+	    << std::endl
 	    << " cls                 Clean the strees' words in the system" 
 	    << std::endl
 	    << " done                Export the words which you have remembered"
 	    <<std::endl
 	    << " export <taskID>     Export a tasks' words to the screen"
 	    << std::endl
-	    << " ls                  List the should reviewed tasks's information" 
+	    << " ls                  List the information of the tasks that should be reviewed"
 	    << std::endl
 	    << " new    <filename>   Creat new tasks with the words in the file" 
 	    << std::endl
-	    << " modify [word]       Modify the word in the dictionary."
+	    << " modify [word]       Modify the word in the dictionary"
 	    << std::endl
 	    << " recite <taskID>     Recite the task whose ID is taskID"
 	    <<std::endl

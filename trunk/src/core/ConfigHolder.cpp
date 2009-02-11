@@ -19,7 +19,6 @@ const  std::vector<unsigned> *ConfigHolder::r_list() {
   initPt.push_back(1);
   initPt.push_back(3);
   initPt.push_back(5);
-  initPt.push_back(std::numeric_limits<unsigned>::max());
   return &initPt;
 }
 

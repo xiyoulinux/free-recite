@@ -30,7 +30,10 @@ private:
   bool modify(const std::string &word);
   void recite(time_t taskID);
   void remove(time_t taskID);
+  void scanProcess(Scanner &scanner);
+  void scanProHelp();
   void showActive();
+  void showAll();
   void showResult(bool result);
   void test(time_t taskID);
 };
